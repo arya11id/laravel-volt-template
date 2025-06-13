@@ -54,12 +54,43 @@
                                 <span class="sidebar-text"><i class="fas fa-user"></i> User</span>
                             </a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('status.index')}}">
+                                <span class="sidebar-text"><i class="fas fa-book"></i> status</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('pemohon.index')}}">
+                                <span class="sidebar-text"><i class="fas fa-book"></i> pemohon</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{route('jenis-layanan.index')}}">
+                                <span class="sidebar-text"><i class="fas fa-book"></i> Jenis Layanan</span>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </li>
-            @endrole
-            @role('admin')
             <li class="nav-item">
+                <a href="{{route('detail-layanan.index')}}" class="nav-link">
+                    <span class="sidebar-icon">
+                        <i class="fas fa-clipboard-list"></i>
+                    </span>
+                    <span class="sidebar-text">Layanan</span>
+                </a>
+            </li>
+            {{-- <li class="nav-item">
+                <a href="{{route('activity-log.index')}}" class="nav-link">
+                    <span class="sidebar-icon">
+                        <i class="fas fa-clock"></i>
+                    </span>
+                    <span class="sidebar-text">Activity Log</span>
+                </a>
+            </li> --}}
+            @endrole
+            @role('client')
+                <li class="nav-item">
                 <a href="{{route('activity-log.index')}}" class="nav-link">
                     <span class="sidebar-icon">
                         <i class="fas fa-clock"></i>

@@ -55,7 +55,7 @@
                 <div class="d-flex justify-content-center gap-3">
                     @guest
                     <a href="{{route('login')}}" class="btn btn-secondary">Login</a>
-                    <a href="{{route('register')}}" class="btn btn-secondary">Register</a>
+                    <a href="{{route('track')}}" class="btn btn-secondary">Tracking layanan</a>
                     @else
                     <a href="{{route('dashboard')}}" class="btn btn-secondary">Dashboard</a>
                     @endguest
@@ -68,7 +68,7 @@
             </figure>
         </section>
     </main>
-    <div class="container mt-5">
+    {{-- <div class="container mt-5">
         <div class="row justify-content-between align-items-center">
             <div class="col-lg-5 order-lg-2 mb-5 mb-lg-0">
                 <h2 class="h1">Bootstrap 5</h2>
@@ -80,7 +80,7 @@
             </div>
             <div class="col-lg-6 order-lg-1"><img src="{{asset('assets/img/illustrations/bs5-illustrations.svg')}}" alt="Front pages overview"></div>
         </div>
-    </div>
+    </div> --}}
     <footer class="footer py-6 mt-5 bg-gray-800 text-white">
         <div class="container">
             <div class="row">
@@ -101,7 +101,7 @@
     <script src="{{asset('vendor/onscreen/dist/on-screen.umd.min.js')}}"></script>
 
     <!-- FA Icon -->
-    <script src="https://kit.fontawesome.com/8482c12eb4.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
 
 </body>
 

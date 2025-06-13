@@ -36,6 +36,9 @@
     <link rel="mask-icon" href="{{asset('assets/img/favicon/safari-pinned-tab.svg')}}" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
+    <!-- Di dalam <head> -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+
 
     <!-- Volt CSS -->
     <link type="text/css" href="{{asset('css/volt.css')}}" rel="stylesheet">
@@ -60,7 +63,7 @@
     <script src="{{asset('vendor/onscreen/dist/on-screen.umd.min.js')}}"></script>
 
     <!-- FA Icon -->
-    <script src="https://kit.fontawesome.com/8482c12eb4.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
 
     @yield('customJS')
 </body>

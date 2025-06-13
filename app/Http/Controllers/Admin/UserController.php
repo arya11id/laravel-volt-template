@@ -19,7 +19,7 @@ class UserController extends Controller
     {
         //
         $data = [
-            'users' => User::where('id', '!=', Auth::user()->id)->get()
+            'users' => User::get()
         ];
 
         return view('user.index', $data);

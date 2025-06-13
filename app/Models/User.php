@@ -11,8 +11,9 @@ use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Spatie\Permission\Traits\HasRoles;
 
-class User extends Authenticatable implements MustVerifyEmail, HasMedia
+class User extends Authenticatable implements HasMedia
 {
+    //MustVerifyEmail
     use HasFactory, HasRoles, InteractsWithMedia, Notifiable;
 
     /**
@@ -48,8 +49,8 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
     public function registerMediaConversions(Media $media = null): void
     {
         $this->addMediaConversion('thumb')
-              ->width(368)
-              ->height(232)
-              ->sharpen(10);
+            ->width(368)
+            ->height(232)
+            ->sharpen(10);
     }
 }
