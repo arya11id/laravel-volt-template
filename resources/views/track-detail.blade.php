@@ -1,45 +1,5 @@
-<!--
-
-=========================================================
-* Volt Free - Bootstrap 5 Dashboard
-=========================================================
-
-* Product Page: https://themesberg.com/product/admin-dashboard/volt-bootstrap-5-dashboard
-* Copyright 2021 Themesberg (https://www.themesberg.com)
-
-* Designed and coded by https://themesberg.com
-
-=========================================================
-
-* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. Please contact us to request a removal. Contact us if you want to remove it.
-
--->
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <!-- Primary Meta Tags -->
-    <title>Laravel Volt Template Starter</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Laravel Volt Template Starter">
-    <meta name="author" content="Andry">
-    <meta name="description" content="Laravel Volt Template Starter">
-    <meta name="keywords"
-        content="laravel, bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, themesberg, themesberg dashboard, themesberg admin dashboard" />
-    <link rel="canonical" href="https://themesberg.com/product/admin-dashboard/volt-premium-bootstrap-5-dashboard">
-
-    <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('assets/img/favicon/apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/img/favicon/favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/img/favicon/favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ asset('assets/img/favicon/site.webmanifest') }}">
-    <link rel="mask-icon" href="{{ asset('assets/img/favicon/safari-pinned-tab.svg') }}" color="#ffffff">
-    <meta name="msapplication-TileColor" content="#ffffff">
-    <meta name="theme-color" content="#ffffff">
-
-    <!-- Volt CSS -->
-    <link type="text/css" href="{{ asset('css/volt.css') }}" rel="stylesheet">
+@extends('layouts.home')
+@section('css')
     <style>
         .tracking-detail {
             padding: 3rem 0
@@ -208,106 +168,195 @@
             }
         }
     </style>
-
-</head>
-
-<body>
-    <main>
-        <section class="section-header overflow-hidden pt-7 pt-lg-8 pb-9 pb-lg-12 bg-primary text-white">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12 text-center">
-                        <h2 class="fw-bolder">tracking layanan</h2>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-center gap-6">
-                    <div class="mb-3 mb-lg-0">
-                        <h1 class="h4">Nama Pemohon : {{ $data->pemohon->nama ?? '-' }}</h1>
-                        <p class="mb-0">NIP : {{ $data->pemohon->nip ?? '-' }}</p>
-                        <p class="mb-0">Asal Instansi : {{ $data->pemohon->asal_instansi ?? '-' }}</p>
-                        <p class="mb-0">Jenis Layanan : {{ $data->jenisLayanan->nama }}</p>
-                        <p class="mb-0">Tanggal Pengajuan :
-                            {{ $data->tgl_pengajuan->translatedFormat('d F Y') ?? '-' }}</p>
-                        <p class="mb-0">Keterangan : {{ $data->keterangan ?? '-' }}</p>
-
-                    </div>
+@endsection
+@section('content')
+    <section class="section-header overflow-hidden pt-7 pt-lg-8 pb-9 pb-lg-12 bg-primary text-white">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <h2 class="fw-bolder"></h2>
                 </div>
             </div>
-            <br />
-            <div class="card">
-                <div class="card-body">
-                    <div class="container">
-                        <h2>TRACK INFO</h2>
-                        <div class="row">
+            <div class="d-flex justify-content-center gap-6">
+                {{-- <div class="mb-3 mb-lg-0">
+                    <h1 class="h4">Nama Pemohon : {{ $data->pemohon->nama ?? '-' }}</h1>
+                    <p class="mb-0">NIP : {{ $data->pemohon->nip ?? '-' }}</p>
+                    <p class="mb-0">Asal Instansi : {{ $data->pemohon->asal_instansi ?? '-' }}</p>
+                    <p class="mb-0">Jenis Layanan : {{ $data->jenisLayanan->nama }}</p>
+                    <p class="mb-0">Tanggal Pengajuan :
+                        {{ $data->tgl_pengajuan->translatedFormat('d F Y') ?? '-' }}</p>
+                    <p class="mb-0">Keterangan : {{ $data->keterangan ?? '-' }}</p>
 
-                            <div class="col-md-12 col-lg-12">
-
-                                <div class="tracking-list">
-                                    @foreach ($tracking as $list)
-                                        <div class="tracking-item">
-                                            <div class="tracking-icon status-intransit">
-                                                <i class="fa fa-book"></i>
-                                            </div>
-                                            <div class="tracking-date">
-                                                {{ $list->tgl_layanan->translatedFormat('d F Y') ?? '-' }}</div>
-                                            <div class="tracking-content">Status : {{ $list->status->nama }}
-                                                <span>keterangan : {{ $list->keterangan ?? '-' }}</span>
-                                                @if ($list->url_file != null)
-                                                    <a href="{{ $list->url_file ?? '-' }}" target="_blank"
-                                                        class="btn btn-primary btn-sm">Lihat File</a>
-                                                @endif
-                                            </div>
+                </div> --}}
+                <div class="table-responsive">
+                    <table class="table table-centered table-nowrap mb-0 rounded">
+                        <thead class="thead-light">
+                            <tr>
+                                <th class="border-0 rounded-start">tracking layanan</th>
+                                <th class="border-0"></th>
+                                <th class="border-0 rounded-end"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Item -->
+                            <tr>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">Nama Pemohon</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">:</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{ $data->pemohon->nama ?? '-' }}</span></div>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">NIP</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">:</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{ $data->pemohon->nip ?? '-' }}</span></div>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">Asal Instansi</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">:</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{ $data->pemohon->asal_instansi ?? '-' }}</span></div>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">Jenis Layanan</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">:</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{ $data->jenisLayanan->nama ?? '' }}</span></div>
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">Tanggal Pengajuan</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">:</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span
+                                                class="h6">{{ $data->tgl_pengajuan->translatedFormat('d F Y') ?? '-' }}</span>
                                         </div>
-                                    @endforeach
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">Keterangan</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">:</span></div>
+                                    </a>
+                                </td>
+                                <td class="border-0">
+                                    <a href="#" class="d-flex align-items-center">
+                                        <div><span class="h6">{{ $data->keterangan ?? '-' }}</span>
+                                        </div>
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <br />
+        <div class="card">
+            <div class="card-body">
+                <div class="container">
+                    <h2>TRACK INFO</h2>
+                    <div class="row">
+
+                        <div class="col-md-12 col-lg-12">
+
+                            <div class="tracking-list">
+                                @foreach ($tracking as $list)
                                     <div class="tracking-item">
                                         <div class="tracking-icon status-intransit">
-                                            {{-- <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
-                                        <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
-                                    </svg> --}}
                                             <i class="fa fa-book"></i>
                                         </div>
                                         <div class="tracking-date">
-                                            {{ $data->tgl_pengajuan->translatedFormat('d F Y') ?? '-' }}</div>
-                                        <div class="tracking-content">Pengajuan layanan :
-                                            {{ $data->jenisLayanan->nama }}
-                                            <span>keterangan:{{ $data->keterangan ?? '-' }}</span>
-
-
+                                            {{ $list->tgl_layanan->translatedFormat('d F Y') ?? '-' }}</div>
+                                        <div class="tracking-content">Status : {{ $list->status->nama }}
+                                            <span>keterangan : {{ $list->keterangan ?? '-' }}</span>
+                                            @if ($list->url_file != null)
+                                                <a href="{{ $list->url_file ?? '-' }}" target="_blank"
+                                                    class="btn btn-primary btn-sm">Lihat File</a>
+                                            @endif
                                         </div>
                                     </div>
+                                @endforeach
+                                <div class="tracking-item">
+                                    <div class="tracking-icon status-intransit">
+                                        {{-- <svg class="svg-inline--fa fa-circle fa-w-16" aria-hidden="true" data-prefix="fas" data-icon="circle" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg="">
+                                        <path fill="currentColor" d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"></path>
+                                    </svg> --}}
+                                        <i class="fa fa-book"></i>
+                                    </div>
+                                    <div class="tracking-date">
+                                        {{ $data->tgl_pengajuan->translatedFormat('d F Y') ?? '-' }}</div>
+                                    <div class="tracking-content">Pengajuan layanan :
+                                        {{ $data->jenisLayanan->nama }}
+                                        <span>keterangan:{{ $data->keterangan ?? '-' }}</span>
 
+
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </section>
-    </main>
-
-    <footer class="footer py-6 mt-5 bg-gray-800 text-white">
-        <div class="container">
-            <div class="row">
-                <div class="col mb-md-0">
-                    <div class="d-flex text-center justify-content-center align-items-center" role="contentinfo">
-                        <p class="fw-normal font-small mb-0">Copyright © Themesberg 2019-<span
-                                class="current-year">2021</span>. All rights reserved.</p>
-                    </div>
-                </div>
-            </div>
         </div>
-    </footer>
-
-    <!-- Core -->
-    <script src="{{ asset('vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
-    <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
-
-    <!-- Vendor JS -->
-    <script src="{{ asset('vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
-
-    <!-- FA Icon -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>
-
-</body>
-
-</html>
+    </section>
+@endsection

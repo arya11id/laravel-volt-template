@@ -32,6 +32,11 @@ class TrackingController extends Controller
             'uuid' => Str::uuid(),
             'created_by' => auth()->id(),
         ]));
+        if ($request->status_id == 4) {
+            $detailLayanan = DetailLayanan::findOrFail($request->detail_layanan_id);
+            $detailLayanan->tgl_selesai = now();
+            $detailLayanan->save();
+        }
         return response()->json(['success' => true]);
     }
     public function show($id)

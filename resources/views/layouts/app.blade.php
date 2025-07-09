@@ -20,20 +20,22 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <!-- Primary Meta Tags -->
-    <title>Laravel Volt Template Starter</title>
+    <title>Dinas Pendidikan Cabang Wilayah Kediri</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="title" content="Laravel Volt Template Starter">
+    <meta name="title" content="Dinas Pendidikan Cabang Wilayah Kediri">
     <meta name="author" content="Andry">
-    <meta name="description" content="Laravel Volt Template Starter">
-    <meta name="keywords" content="laravel, bootstrap 5, bootstrap, bootstrap 5 admin dashboard, bootstrap 5 dashboard, bootstrap 5 charts, bootstrap 5 calendar, bootstrap 5 datepicker, bootstrap 5 tables, bootstrap 5 datatable, vanilla js datatable, themesberg, themesberg dashboard, themesberg admin dashboard" />
+    <meta name="description" content="Dinas Pendidikan Cabang Wilayah Kediri">
+    <meta name="keywords" content="DinasPendidikanCabangWilayahKediri" />
     <link rel="canonical" href="https://themesberg.com/product/admin-dashboard/volt-premium-bootstrap-5-dashboard">
 
     <!-- Favicon -->
-    <link rel="apple-touch-icon" sizes="120x120" href="{{asset('assets/img/favicon/apple-touch-icon.png')}}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{asset('assets/img/favicon/favicon-32x32.png')}}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{asset('assets/img/favicon/favicon-16x16.png')}}">
-    <link rel="manifest" href="{{asset('assets/img/favicon/site.webmanifest')}}">
-    <link rel="mask-icon" href="{{asset('assets/img/favicon/safari-pinned-tab.svg')}}" color="#ffffff">
+    <link rel="apple-touch-icon" sizes="120x120" href="https://dindik.jatimprov.go.id/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32"
+        href="https://dindik.jatimprov.go.id/assets/images/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16"
+        href="https://dindik.jatimprov.go.id/assets/images/favicon.png">
+    <link rel="manifest" href="{{ asset('assets/img/favicon/site.webmanifest') }}">
+    <link rel="mask-icon" href="{{ asset('assets/img/favicon/safari-pinned-tab.svg') }}" color="#ffffff">
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="theme-color" content="#ffffff">
     <!-- Di dalam <head> -->
@@ -41,7 +43,7 @@
 
 
     <!-- Volt CSS -->
-    <link type="text/css" href="{{asset('css/volt.css')}}" rel="stylesheet">
+    <link type="text/css" href="{{ asset('css/volt.css') }}" rel="stylesheet">
 
     @yield('customCSS')
 </head>
@@ -56,11 +58,11 @@
         </div>
     </main>
     <!-- Core -->
-    <script src="{{asset('vendor/@popperjs/core/dist/umd/popper.min.js')}}"></script>
-    <script src="{{asset('vendor/bootstrap/dist/js/bootstrap.min.js')}}"></script>
+    <script src="{{ asset('vendor/@popperjs/core/dist/umd/popper.min.js') }}"></script>
+    <script src="{{ asset('vendor/bootstrap/dist/js/bootstrap.min.js') }}"></script>
 
     <!-- Vendor JS -->
-    <script src="{{asset('vendor/onscreen/dist/on-screen.umd.min.js')}}"></script>
+    <script src="{{ asset('vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
 
     <!-- FA Icon -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/js/all.min.js" crossorigin="anonymous"></script>

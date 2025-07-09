@@ -31,6 +31,7 @@ Route::match(['get', 'post'], '/track', [DashboardController::class, 'track'])->
 Route::get('/track-detail/{uuid}', [DashboardController::class, 'trackDetail'])->name('track-detail');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/absensi', [DashboardController::class, 'absensi'])->name('absensi');
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
@@ -71,6 +72,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/tracking-show/{id}', [TrackingController::class, 'show'])->name('tracking.edit');
     Route::post('/tracking-update/{id}', [TrackingController::class, 'update'])->name('tracking.update');
     Route::delete('/tracking-delete/{id}', [TrackingController::class, 'destroy'])->name('tracking.destroy');
+
+    Route::get('/dashboard/detail/kecamatan/{kode}', [DashboardController::class, 'detailKec'])->name('dashboard.detail.kecamatan');
+    Route::get('/dashboard/detail/kec/{kode}/page/{page}', [DashboardController::class, 'detailKecPage'])->name('dashboard.detail.kecamatan.page');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {
@@ -81,6 +85,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/tracking', function () {
         return view('user.tracking.index');
     })->name('tracking.index');
+    Route::get('/home', [DashboardController::class, 'home'])->name('home');
 });
 
 require __DIR__ . '/auth.php';

@@ -74,6 +74,21 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
             'prefix_indexes' => true,
+            'schema' => env('DB_SCHEMA', ''),
+            'sslmode' => 'prefer',
+        ],
+
+        'pgsql_dindik' => [
+            'driver' => 'pgsql',
+            'url' => env('DATABASE_URL_DINDIK'),
+            'host' => env('DB_HOST_DINDIK', '127.0.0.1'),
+            'port' => env('DB_PORT_DINDIK', '5432'),
+            'database' => env('DB_DATABASE_DINDIK', 'forge'),
+            'username' => env('DB_USERNAME_DINDIK', 'forge'),
+            'password' => env('DB_PASSWORD_DINDIK', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
             'schema' => 'public',
             'sslmode' => 'prefer',
         ],
@@ -123,7 +138,7 @@ return [
 
         'options' => [
             'cluster' => env('REDIS_CLUSTER', 'redis'),
-            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_').'_database_'),
+            'prefix' => env('REDIS_PREFIX', Str::slug(env('APP_NAME', 'laravel'), '_') . '_database_'),
         ],
 
         'default' => [
