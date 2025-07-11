@@ -22,7 +22,7 @@ class DetailLayananController extends Controller
 
     public function data(Request $request)
     {
-        $data = DetailLayanan::with('jenisLayanan')->with('pemohon')->get();
+        $data = DetailLayanan::with('jenisLayanan')->with('pemohon')->latest()->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
