@@ -61,9 +61,10 @@ class DashboardController extends Controller
                 ->where('tgl_lahir', $request->tgl_lahir)
                 ->first();
             if ($cari) {
-                $tracking = DetailLayanan::with('jenisLayanan')
-                    ->with('pemohon', function ($query) use ($request) {
-                        $query->where('nip', $request->nip)->where('tgl_lahir', $request->tgl_lahir);
+                $tracking = DetailLayanan::with(['jenisLayanan', 'pemohon'])
+                    ->whereHas('pemohon', function ($query) use ($request) {
+                        $query->where('nip', $request->nip)
+                            ->where('tgl_lahir', $request->tgl_lahir);
                     })
                     ->get();
             } else {
