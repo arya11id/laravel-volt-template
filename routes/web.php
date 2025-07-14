@@ -10,6 +10,8 @@ use App\Http\Controllers\Admin\JenisLayananController;
 use App\Http\Controllers\Admin\DetailLayananController;
 use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TrackingController;
+use App\Http\Controllers\Admin\LayananSuratController;
+use App\Http\Controllers\Admin\DetailLayananSuratController;
 
 
 /*
@@ -37,6 +39,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/user', [UserController::class, 'index'])->name('user.index');
     Route::get('/user/{user}', [UserController::class, 'show'])->name('user.show');
     Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
+    Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
     Route::get('/activity-log', [ActivityLogController::class, 'index'])->name('activity-log.index');
     Route::get('/pemohon', [PemohonController::class, 'index'])->name('pemohon.index');
     Route::get('/pemohon/data', [PemohonController::class, 'data'])->name('pemohon.data');
@@ -75,6 +78,15 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
     Route::get('/dashboard/detail/kecamatan/{kode}', [DashboardController::class, 'detailKec'])->name('dashboard.detail.kecamatan');
     Route::get('/dashboard/detail/kec/{kode}/page/{page}', [DashboardController::class, 'detailKecPage'])->name('dashboard.detail.kecamatan.page');
+
+    Route::resource('layanan-surat', LayananSuratController::class);
+    Route::get('layanan-surat-data', [LayananSuratController::class, 'getData'])->name('layanan-surat.data');
+    Route::resource('layanan-surat-detail', DetailLayananSuratController::class);
+    Route::get('/layanan-surat-detail-data/{id}', [DetailLayananSuratController::class, 'data'])->name('layanan-surat-detail.data');
+    // Route::post('/layanan-surat-detail/store', [DetailLayananSuratController::class, 'store'])->name('layanan-surat-detail.store');
+    // Route::get('/layanan-surat-detail/{id}', [DetailLayananSuratController::class, 'show'])->name('layanan-surat-detail.edit');
+    // Route::post('/layanan-surat-detail/{id}', [DetailLayananSuratController::class, 'update'])->name('layanan-surat-detail.update');
+    // Route::delete('/layanan-surat-detail/{id}', [DetailLayananSuratController::class, 'destroy'])->name('layanan-surat-detail.destroy');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

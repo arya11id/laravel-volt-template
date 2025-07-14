@@ -85,7 +85,15 @@
                         <span class="sidebar-icon">
                             <i class="fas fa-clipboard-list"></i>
                         </span>
-                        <span class="sidebar-text">Layanan</span>
+                        <span class="sidebar-text">Tracking Layanan</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ route('layanan-surat.index') }}" class="nav-link">
+                        <span class="sidebar-icon">
+                            <i class="fas fa-search"></i>
+                        </span>
+                        <span class="sidebar-text">Tracking Layanan Surat</span>
                     </a>
                 </li>
                 {{-- <li class="nav-item">
