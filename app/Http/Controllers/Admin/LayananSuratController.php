@@ -22,7 +22,7 @@ class LayananSuratController extends Controller
     public function getData(Request $request)
     {
         if ($request->ajax()) {
-            $data = LayananSurat::select([
+            $data = LayananSurat::with('jenisLayanan')->select([
                 'id',
                 'uuid',
                 'no_surat',

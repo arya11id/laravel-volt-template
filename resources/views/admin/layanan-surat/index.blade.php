@@ -28,7 +28,7 @@
                             <th>No. Surat</th>
                             <th>Tgl. Surat</th>
                             <th>Keterangan</th>
-                            <th>Jenis Layanan ID</th>
+                            <th>Jenis Layanan</th>
                             <th>Tgl. Pengajuan</th>
                             <th>Tgl. Selesai</th>
                             <th>File</th>
