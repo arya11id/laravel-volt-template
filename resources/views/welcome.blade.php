@@ -12,7 +12,18 @@
             <div class="d-flex justify-content-center gap-3">
                 @guest
                     <a href="{{ route('login') }}" class="btn btn-secondary">Login</a>
-                    <a href="{{ route('track') }}" class="btn btn-secondary">Tracking layanan</a>
+                    <a href="{{ route('track') }}" class="btn btn-secondary">Tracking By NIP/NIK</a>
+                    <a href="{{ route('track-surat') }}" class="btn btn-secondary">Tracking By No Surat</a>
+                    {{-- <div class="btn-group" role="group">
+                        <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Tracking layanan
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('track') }}">Tracking by NIP/NIK</a></li>
+                            <li><a class="dropdown-item" href="{{ route('track-surat') }}">Tracking by No Surat</a></li>
+                        </ul>
+                    </div> --}}
                 @else
                     <a href="{{ route('dashboard') }}" class="btn btn-secondary">Dashboard</a>
                 @endguest

@@ -29,8 +29,10 @@ Route::get('/', function () {
     return view('welcome');
 })->name('root.index');
 Route::match(['get', 'post'], '/track', [DashboardController::class, 'track'])->name('track');
+Route::match(['get', 'post'], '/track-surat', [DashboardController::class, 'trackSurat'])->name('track-surat');
 
 Route::get('/track-detail/{uuid}', [DashboardController::class, 'trackDetail'])->name('track-detail');
+Route::get('/track-surat-detail/{uuid}', [DashboardController::class, 'trackDetailSurat'])->name('track-surat-detail');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 Route::get('/absensi', [DashboardController::class, 'absensi'])->name('absensi');

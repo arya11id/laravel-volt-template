@@ -13,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use App\Models\Pemohon;
+use App\Models\LayananSurat;
+use App\Models\DetailLayananSurat;
 
 class DashboardController extends Controller
 {
@@ -161,5 +163,31 @@ class DashboardController extends Controller
             ->get();
 
         return response()->json($data);
+    }
+    public function trackSurat(Request $request)
+    {
+        $tracking = '';
+        if ($request->has(['no_surat'])) {
+            $cari = LayananSurat::where('no_surat', $request->no_surat)
+                ->first();
+            if ($cari) {
+                $tracking = $cari;
+            } else {
+                return redirect()->back()->with('error', 'Data tidak ditemukan. Silakan periksa kembali No Surat anda.');
+            }
+        }
+
+        return view('track-surat', compact('tracking'));
+    }
+    public function trackDetailSurat($uuid)
+    {
+        $data = LayananSurat::with('jenisLayanan')->whereUuid($uuid)->firstOrFail();
+        $id = $data->id;
+        $tracking = DetailLayananSurat::where('layanan_surat_id', $id)
+            ->with('status')
+            ->with('createdBy')
+            ->orderBy('created_at', 'desc')
+            ->get();
+        return view('track-detail-surat', compact('tracking', 'data'));
     }
 }
