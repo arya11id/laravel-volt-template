@@ -176,8 +176,8 @@
                         name: 'keterangan'
                     },
                     {
-                        data: 'jenis_layanan_id',
-                        name: 'jenis_layanan_id'
+                        data: 'jenis_layanan.nama',
+                        name: 'jenis_layanan.nama'
                     },
                     {
                         data: 'tgl_pengajuan',
