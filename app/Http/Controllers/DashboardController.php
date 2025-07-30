@@ -74,7 +74,8 @@ class DashboardController extends Controller
             }
         }
 
-        return view('track', compact('tracking'));
+        // return view('track', compact('tracking'));
+        return view('depan.track-nip', compact('tracking'));
     }
     public function trackDetail($uuid)
     {
@@ -85,7 +86,8 @@ class DashboardController extends Controller
             ->with('createdBy')
             ->orderBy('created_at', 'desc')
             ->get();
-        return view('track-detail', compact('tracking', 'data'));
+        // return view('track-detail', compact('tracking', 'data'));
+        return view('depan.detail-track-nip', compact('tracking', 'data'));
     }
     public function detailKec($kode)
     {
@@ -177,7 +179,8 @@ class DashboardController extends Controller
             }
         }
 
-        return view('track-surat', compact('tracking'));
+        // return view('track-surat', compact('tracking'));
+        return view('depan.track-surat', compact('tracking'));
     }
     public function trackDetailSurat($uuid)
     {
@@ -188,6 +191,7 @@ class DashboardController extends Controller
             ->with('createdBy')
             ->orderBy('created_at', 'desc')
             ->get();
-        return view('track-detail-surat', compact('tracking', 'data'));
+        // return view('track-detail-surat', compact('tracking', 'data'));
+        return view('depan.detail-surat', compact('tracking', 'data'));
     }
 }

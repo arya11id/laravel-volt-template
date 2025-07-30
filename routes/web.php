@@ -26,7 +26,7 @@ use App\Http\Controllers\Admin\DetailLayananSuratController;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 })->name('root.index');
 Route::match(['get', 'post'], '/track', [DashboardController::class, 'track'])->name('track');
 Route::match(['get', 'post'], '/track-surat', [DashboardController::class, 'trackSurat'])->name('track-surat');
