@@ -12,6 +12,9 @@ use App\Http\Controllers\Admin\StatusController;
 use App\Http\Controllers\Admin\TrackingController;
 use App\Http\Controllers\Admin\LayananSuratController;
 use App\Http\Controllers\Admin\DetailLayananSuratController;
+use App\Http\Controllers\Admin\PegawaiController;
+use App\Http\Controllers\Admin\SkpPegawaiController;
+use App\Http\Controllers\Admin\SkpPegawaiDetailController;
 
 
 /*
@@ -89,6 +92,18 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     // Route::get('/layanan-surat-detail/{id}', [DetailLayananSuratController::class, 'show'])->name('layanan-surat-detail.edit');
     // Route::post('/layanan-surat-detail/{id}', [DetailLayananSuratController::class, 'update'])->name('layanan-surat-detail.update');
     // Route::delete('/layanan-surat-detail/{id}', [DetailLayananSuratController::class, 'destroy'])->name('layanan-surat-detail.destroy');
+
+    Route::get('/pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
+    Route::get('/pegawai/data', [PegawaiController::class, 'data'])->name('pegawai.data');
+    Route::post('/pegawai/import', [PegawaiController::class, 'import'])->name('pegawai.import');
+
+    Route::get('/skp-pegawai', [SkpPegawaiController::class, 'index'])->name('skp-pegawai.index');
+    Route::get('/skp-pegawai/data', [SkpPegawaiController::class, 'data'])->name('skp-pegawai.data');
+    Route::post('/skp-pegawai/store', [SkpPegawaiController::class, 'store'])->name('skp-pegawai.store');
+
+     Route::get('/skp-pegawai-detail/{uuid}', [SkpPegawaiDetailController::class, 'index'])->name('skp-pegawai-detail.index');
+    Route::get('/skp-pegawai-detail/data', [SkpPegawaiDetailController::class, 'data'])->name('skp-pegawai-detail.data');
+    Route::post('/skp-pegawai-detail/import', [SkpPegawaiDetailController::class, 'import'])->name('skp-pegawai-detail.import');
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

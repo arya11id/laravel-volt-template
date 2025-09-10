@@ -96,14 +96,34 @@
                         <span class="sidebar-text">Tracking Layanan Surat</span>
                     </a>
                 </li>
-                {{-- <li class="nav-item">
-                <a href="{{route('activity-log.index')}}" class="nav-link">
-                    <span class="sidebar-icon">
-                        <i class="fas fa-clock"></i>
+                <li class="nav-item">
+                    <span class="nav-link collapsed d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse" data-bs-target="#SKP-master-data">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fas fa-table"></i>
+                            </span>
+                            <span class="sidebar-text">Monitoring SKP</span>
+                        </span>
+                        <span class="link-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
                     </span>
-                    <span class="sidebar-text">Activity Log</span>
-                </a>
-            </li> --}}
+                    <div class="multi-level collapse" role="list" id="SKP-master-data">
+                        <ul class="flex-column nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('pegawai.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Pegawai</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('skp-pegawai.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-book"></i> SKP</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
             @endrole
             @role('client')
                 <li class="nav-item">
