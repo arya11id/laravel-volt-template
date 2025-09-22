@@ -148,7 +148,7 @@
         <div class="mb-3 mb-lg-0">
             <h1 class="h4">Nama Pemohon : {{$data->pemohon->nama}}</h1>
             <p class="mb-0">NIP : {{$data->pemohon->nip}}</p>
-            <p class="mb-0">Asal Instansi : {{$data->pemohon->asal_instansi}}</p>
+            <p class="mb-0">Asal Instansi : {{$data->pemohon->unitKerja->nama ?? ''}}</p>
             <p class="mb-0">Jenis Layanan : {{$data->jenisLayanan->nama}}</p>
             <p class="mb-0">Tanggal Pengajuan : {{$data->tgl_pengajuan->translatedFormat('d F Y')}}</p>
         </div>
