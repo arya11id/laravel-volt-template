@@ -8,17 +8,19 @@ use App\Models\Pemohon;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Str;
+use App\Models\UnitKerja;
 
 class PemohonController extends Controller
 {
     public function index()
     {
-        return view('admin.pemohon.index');
+        $unitKerja = UnitKerja::get();
+        return view('admin.pemohon.index', compact('unitKerja'));
     }
 
     public function data(Request $request)
     {
-        $data = Pemohon::get();
+        $data = Pemohon::with('unitKerja')->get();
         return DataTables::of($data)
             ->addIndexColumn()
             ->addColumn('action', function ($row) {
@@ -45,7 +47,7 @@ class PemohonController extends Controller
 
     public function edit($id)
     {
-        return response()->json(Pemohon::findOrFail($id));
+        return response()->json(Pemohon::with('unitKerja')->findOrFail($id));
     }
 
     public function update(Request $request, $id)

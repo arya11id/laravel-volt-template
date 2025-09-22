@@ -63,8 +63,13 @@
                 <input type="date" id="tgl_lahir" name="tgl_lahir" class="form-control mb-2">
             </div>
             <div class="form-group">
-                <label for="asal_instansi">Asal Instansi</label>
-                <input type="text" id="asal_instansi" name="asal_instansi" class="form-control mb-2" placeholder="Asal Instansi">
+                <label for="asal_instansi">Unit Kerja</label>
+                <select id="id_unit_kerja" name="id_unit_kerja" class="form-control mb-2">
+                    <option value="">-- Pilih Instansi --</option>
+                    @foreach($unitKerja as $unit)
+                        <option value="{{ $unit->id }}">{{ $unit->nama }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
                 <label for="alamat">Alamat</label>
@@ -105,7 +110,12 @@
                 {data: 'nama', name: 'nama'},
                 {data: 'no_hp', name: 'no_hp'},
                 {data: 'tgllahir', name: 'tgllahir'},
-                {data: 'asal_instansi', name: 'asal_instansi'},
+                // {data: 'asal_instansi', name: 'asal_instansi'},
+                {
+                    data: 'unit_kerja.nama', 
+                    name: 'unit_kerja.nama',
+                    defaultContent: '-'
+                },
                 {data: 'alamat', name: 'alamat'},
                 {data: 'action', name: 'action', orderable: false, searchable: false}
             ]
@@ -117,13 +127,21 @@
             $('#pemohonModal').modal('show');
         });
 
-        $('#btnSave').on('click', function () {
+       $('#btnSave').on('click', function () {
             let id = $('#pemohon_id').val();
             let url = id ? `/pemohon/update/${id}` : '{{ route('pemohon.store') }}';
+
+            // Disable button dan tampilkan loading
+            $('#btnSave').prop('disabled', true).html('<span class="spinner-border spinner-border-sm"></span> Menyimpan...');
 
             $.post(url, $('#formPemohon').serialize(), function () {
                 $('#pemohonModal').modal('hide');
                 table.ajax.reload();
+                // Enable button dan kembalikan text
+                $('#btnSave').prop('disabled', false).html('Simpan');
+            }).fail(function() {
+                // Enable button dan kembalikan text jika gagal
+                $('#btnSave').prop('disabled', false).html('Simpan');
             });
         });
 
@@ -137,6 +155,7 @@
                 $('#tgl_lahir').val(data.tgl_lahir);
                 $('#asal_instansi').val(data.asal_instansi);
                 $('#alamat').val(data.alamat);
+                $('#id_unit_kerja').val(data.id_unit_kerja).change();
                 $('#pemohonModal').modal('show');
             });
         });

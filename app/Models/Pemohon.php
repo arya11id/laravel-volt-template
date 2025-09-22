@@ -20,7 +20,8 @@ class Pemohon extends Model
         'alamat',
         'created_by',
         'updated_by',
-        'deleted_by'
+        'deleted_by',
+        'id_unit_kerja',
     ];
     // protected $casts = [
     //     'tgl_lahir' => 'date',
@@ -32,4 +33,9 @@ class Pemohon extends Model
     {
         return $this->hasMany(DetailLayanan::class, 'pemohon_id', 'id');
     }
+    public function unitKerja()
+    {
+        return $this->hasOne(unitKerja::class, 'id', 'id_unit_kerja');
+    }
+
 }
