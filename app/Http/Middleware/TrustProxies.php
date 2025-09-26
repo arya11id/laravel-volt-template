@@ -2,7 +2,11 @@
 
 namespace App\Http\Middleware;
 
-use Fideloper\Proxy\TrustProxies as Middleware;
+// UBAH BARIS INI
+// use Fideloper\Proxy\TrustProxies as Middleware;
+
+// MENJADI INI
+use Illuminate\Http\Middleware\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 
 class TrustProxies extends Middleware

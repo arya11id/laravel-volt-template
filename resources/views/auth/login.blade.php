@@ -26,6 +26,7 @@
     <meta name="author" content="Andry">
     <meta name="description" content="Laravel Volt Template Starter">
     <meta name="keywords" content="DinasPendidikanCabangWilayahKediri" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="canonical" href="https://themesberg.com/product/admin-dashboard/volt-premium-bootstrap-5-dashboard">
 
     <!-- Favicon -->
