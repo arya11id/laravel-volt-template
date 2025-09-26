@@ -8,7 +8,6 @@ use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -19,8 +18,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function create()
     {
-        // $data = DB::connection('pgsql_dindik')->table('unit_kerja')->get();
-        // dd($data);
         return view('auth.login');
     }
 
@@ -32,11 +29,9 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-       
         $request->authenticate();
 
         $cek = $request->session()->regenerate();
-      
 
         activity()
             ->causedBy(Auth::user())
