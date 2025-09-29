@@ -74,7 +74,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="jenis_layanan_id" class="form-label">Jenis Layanan ID</label>
+                            <label for="jenis_layanan_id" class="form-label">Jenis Layanan</label>
                             <select name="jenis_layanan_id" id="jenis_layanan_id" class="form-select mb-2">
                                 <option value="">Pilih Jenis Layanan</option>
                                 @foreach ($jenisLayanan as $jenisLayanan)

@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+// ✅ MUST BE THIS for Laravel 8 with the package installed:
 use Fideloper\Proxy\TrustProxies as Middleware;
 use Illuminate\Http\Request;
 

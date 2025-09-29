@@ -7,7 +7,7 @@
         <nav class="breadcrumbs">
             <div class="container">
                 <ol>
-                    <li><a href="index.html">Home</a></li>
+                    <li><a href="/">Home</a></li>
                     <li class="current">Tracking by NIP</li>
                 </ol>
             </div>

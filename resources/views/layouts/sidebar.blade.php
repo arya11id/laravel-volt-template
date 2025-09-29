@@ -96,7 +96,7 @@
                         <span class="sidebar-text">Tracking Layanan Surat</span>
                     </a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <span class="nav-link collapsed d-flex justify-content-between align-items-center"
                         data-bs-toggle="collapse" data-bs-target="#SKP-master-data">
                         <span>
@@ -123,7 +123,7 @@
                             </li>
                         </ul>
                     </div>
-                </li>
+                </li> --}}
             @endrole
             @role('client')
                 <li class="nav-item">
