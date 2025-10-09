@@ -51,7 +51,7 @@
                                 <div><span class="h6">:</span></div>
                             </td>
                             <td class="border-0 rounded-start">
-                                <div><span class="h6">{{ $data->pemohon->asal_instansi ?? '-' }}</span></div>
+                                <div><span class="h6">{{ $data->pemohon->unitKerja->nama ?? '-' }} </span></div>
                             </td>
                         </tr>
                         <tr>
