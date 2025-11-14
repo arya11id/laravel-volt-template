@@ -15,6 +15,8 @@ use App\Http\Controllers\Admin\DetailLayananSuratController;
 use App\Http\Controllers\Admin\PegawaiController;
 use App\Http\Controllers\Admin\SkpPegawaiController;
 use App\Http\Controllers\Admin\SkpPegawaiDetailController;
+use App\Http\Controllers\Admin\Sipd\TahunController;
+use App\Http\Controllers\Admin\Sipd\DpaController;
 
 
 /*
@@ -38,6 +40,7 @@ Route::get('/track-detail/{uuid}', [DashboardController::class, 'trackDetail'])-
 Route::get('/track-surat-detail/{uuid}', [DashboardController::class, 'trackDetailSurat'])->name('track-surat-detail');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/sipd', [DashboardController::class, 'sipd'])->name('sipd');
 Route::get('/absensi', [DashboardController::class, 'absensi'])->name('absensi');
 
 Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
@@ -101,9 +104,17 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/skp-pegawai/data', [SkpPegawaiController::class, 'data'])->name('skp-pegawai.data');
     Route::post('/skp-pegawai/store', [SkpPegawaiController::class, 'store'])->name('skp-pegawai.store');
 
-     Route::get('/skp-pegawai-detail/{uuid}', [SkpPegawaiDetailController::class, 'index'])->name('skp-pegawai-detail.index');
+    Route::get('/skp-pegawai-detail/{uuid}', [SkpPegawaiDetailController::class, 'index'])->name('skp-pegawai-detail.index');
     Route::get('/skp-pegawai-detail/data', [SkpPegawaiDetailController::class, 'data'])->name('skp-pegawai-detail.data');
     Route::post('/skp-pegawai-detail/import', [SkpPegawaiDetailController::class, 'import'])->name('skp-pegawai-detail.import');
+    // SIPD Routes
+     Route::prefix('sipd-ri')->group(function () {
+        Route::get('/tahun', [TahunController::class, 'index'])->name('sipd.tahun.index');
+        Route::get('/tahun/data', [TahunController::class, 'data'])->name('sipd.tahun.data');
+        Route::get('/dpa/{jenis}', [DpaController::class, 'index'])->name('sipd.dpa.index');
+        Route::post('/dpa/data/{jenis}', [DpaController::class, 'data'])->name('sipd.dpa.data');
+
+     });
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

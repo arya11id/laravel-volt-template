@@ -15,6 +15,8 @@ use Illuminate\Support\Facades\DB;
 use App\Models\Pemohon;
 use App\Models\LayananSurat;
 use App\Models\DetailLayananSurat;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\SipdExport;
 
 class DashboardController extends Controller
 {
@@ -194,4 +196,68 @@ class DashboardController extends Controller
         // return view('track-detail-surat', compact('tracking', 'data'));
         return view('depan.detail-surat', compact('tracking', 'data'));
     }
+    public function sipd(Request $request)
+    {
+        $unit = '';
+        if ($request->query('unit')) {
+            $unit = $request->query('unit') ?? '';
+        }
+        $kodeList = DB::select("
+            SELECT 
+                rb.kode_akun,
+                rb.nama_akun
+            FROM sipdri.rinci_sub_bl rb
+                LEFT JOIN sipdri.unit_kerja uk ON rb.id_subs_sub_bl = uk.id_subs_sub_bl
+                LEFT JOIN sipdri.ket_sub_bl kb ON rb.id_ket_sub_bl = kb.id_ket_sub_bl
+                WHERE uk.subs_bl_teks = ?
+            GROUP BY  rb.kode_akun,
+                rb.nama_akun
+            ORDER BY  rb.kode_akun,
+                rb.nama_akun
+        ", [$unit]);
+        
+
+        $list = [];
+
+        foreach ($kodeList as $k) {
+            $data = DB::select("
+                SELECT
+                    uk.subs_bl_teks,
+                    kb.ket_bl_teks,
+                    rb.nama_standar_harga,
+                    rb.spek,
+                    rb.koefisien_murni AS koefisien_sebelum,
+                    rb.harga_satuan_murni AS harga_sebelum,
+                    rb.total_harga_murni AS total_sebelum,
+                    rb.koefisien AS koefisien_setelah,
+                    rb.harga_satuan AS harga_setelah,
+                    rb.total_harga AS total_setelah
+                FROM sipdri.rinci_sub_bl rb
+                LEFT JOIN sipdri.unit_kerja uk ON rb.id_subs_sub_bl = uk.id_subs_sub_bl
+                LEFT JOIN sipdri.ket_sub_bl kb ON rb.id_ket_sub_bl = kb.id_ket_sub_bl
+                WHERE rb.kode_akun = ? AND uk.subs_bl_teks = ?
+                ORDER BY 
+                    uk.subs_bl_teks,
+                    kb.ket_bl_teks,
+                    rb.kode_akun,
+                    rb.nama_standar_harga
+            ", [$k->kode_akun,$unit]);
+
+            $list[] = [
+                'kode_akun' => $k->kode_akun,
+                'nama_akun' => $k->nama_akun,
+                'data' => $data
+            ];
+        }
+
+        // Jika ada parameter ?export=excel maka download Excel
+        if ($request->query('export') === 'excel') {
+            $filename = 'data_sipd_' .$unit.'_'. now()->format('Ymd_His') . '.xlsx';
+            return Excel::download(new SipdExport($list), $filename);
+        }
+
+        // Default: tampilkan JSON
+        return response()->json($list);
+    }
+
 }
