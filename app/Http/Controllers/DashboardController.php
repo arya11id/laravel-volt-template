@@ -259,5 +259,25 @@ class DashboardController extends Controller
         // Default: tampilkan JSON
         return response()->json($list);
     }
+    public function bpduadua()
+    {
+        return view('admin.sippol.index');
+    }
+    public function readExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        // Membaca file tanpa menyimpannya
+        $data = Excel::toArray([], $request->file('file'));
+
+        // Index [0] berarti sheet pertama
+        $rows = $data[0];
+        $startFromRow18 = array_slice($rows, 13); // index 17 = baris ke 18
+
+        // return response()->json($startFromRow18);
+        return view('admin.sippol.data', compact('startFromRow18'));
+    }
 
 }

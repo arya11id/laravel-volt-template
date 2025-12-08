@@ -108,13 +108,18 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::get('/skp-pegawai-detail/data', [SkpPegawaiDetailController::class, 'data'])->name('skp-pegawai-detail.data');
     Route::post('/skp-pegawai-detail/import', [SkpPegawaiDetailController::class, 'import'])->name('skp-pegawai-detail.import');
     // SIPD Routes
-     Route::prefix('sipd-ri')->group(function () {
-        Route::get('/tahun', [TahunController::class, 'index'])->name('sipd.tahun.index');
-        Route::get('/tahun/data', [TahunController::class, 'data'])->name('sipd.tahun.data');
-        Route::get('/dpa/{jenis}', [DpaController::class, 'index'])->name('sipd.dpa.index');
-        Route::post('/dpa/data/{jenis}', [DpaController::class, 'data'])->name('sipd.dpa.data');
+    Route::prefix('sipd-ri')->group(function () {
+    Route::get('/tahun', [TahunController::class, 'index'])->name('sipd.tahun.index');
+    Route::get('/tahun/data', [TahunController::class, 'data'])->name('sipd.tahun.data');
+    Route::get('/dpa/{jenis}', [DpaController::class, 'index'])->name('sipd.dpa.index');
+    Route::post('/dpa/data/{jenis}', [DpaController::class, 'data'])->name('sipd.dpa.data');
 
-     });
+    });
+    Route::prefix('sippol')->group(function () {
+        Route::get('/view-bp22', [DashboardController::class, 'bpduadua'])->name('sippol.view.bp22');
+        Route::post('/read-bp22', [DashboardController::class, 'readExcel'])->name('sipd.read.bp22');
+
+    });
 });
 
 Route::middleware(['auth', 'verified'])->group(function () {

@@ -120,6 +120,30 @@
                         </ul>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <span class="nav-link collapsed d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse" data-bs-target="#submenu-sippol">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fas fa-table"></i>
+                            </span>
+                            <span class="sidebar-text">SIPPOL</span>
+                        </span>
+                        <span class="link-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                    </span>
+                    <div class="multi-level collapse" role="list" id="submenu-sippol">
+                        <ul class="flex-column nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('sippol.view.bp22') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> DATA</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
                 {{-- <li class="nav-item">
                     <span class="nav-link collapsed d-flex justify-content-between align-items-center"
                         data-bs-toggle="collapse" data-bs-target="#SKP-master-data">
