@@ -14,14 +14,14 @@ class TrsBastBarang extends Migration
     public function up()
     {
         //
-        Schema::create('bpopp.trs_bast_barang', function (Blueprint $table) {
+        Schema::create('bpopp.bast_trs_bast_barang', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->integer('id_trs_bast')->nullable();
+            $table->integer('id_bast_transaksi')->nullable();
             $table->string('jenis')->nullable();
             $table->string('uraian')->nullable();
             $table->integer('volume')->nullable();
-            $table->integer('id_satuan')->nullable();
+            $table->integer('id_bast_satuan')->nullable();
             $table->integer('harga_satuan')->nullable();
             $table->string('barang_file_name_a')->nullable();
             $table->string('barang_file_path_a')->nullable();

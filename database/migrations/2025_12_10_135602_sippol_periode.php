@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class MsPengurusBarang extends Migration
+class SippolPeriode extends Migration
 {
     /**
      * Run the migrations.
@@ -14,15 +14,14 @@ class MsPengurusBarang extends Migration
     public function up()
     {
         //
-        Schema::create('bpopp.bast_pengurus_barang', function (Blueprint $table) {
+        Schema::create('bpopp.sippol_periode', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->string('nama_pengurus')->nullable();
-            $table->string('nip_pengurus')->nullable();
+            $table->string('nama_periode')->nullable();
+            $table->date('tgl')->nullable();
             $table->integer('created_by')->nullable();
             $table->integer('updated_by')->nullable();
             $table->integer('deleted_by')->nullable();
-            $table->boolean('is_active')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

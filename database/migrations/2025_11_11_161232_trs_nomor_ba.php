@@ -14,10 +14,10 @@ class TrsNomorBa extends Migration
     public function up()
     {
         //
-        Schema::create('bpopp.trs_nomor_ba', function (Blueprint $table) {
+        Schema::create('bpopp.bast_trs_nomor_ba', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->integer('id_ms_nomor_ba')->nullable();
+            $table->integer('id_bast_ms_nomor_ba')->nullable();
             $table->date('tgl_nomor')->nullable();
             $table->string('no_c')->nullable();
             $table->integer('created_by')->nullable();

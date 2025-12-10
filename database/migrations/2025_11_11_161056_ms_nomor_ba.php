@@ -14,7 +14,7 @@ class MsNomorBa extends Migration
     public function up()
     {
         //
-         Schema::create('bpopp.ms_nomor_ba', function (Blueprint $table) {
+         Schema::create('bpopp.bast_ms_nomor_ba', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('no_a')->nullable();
