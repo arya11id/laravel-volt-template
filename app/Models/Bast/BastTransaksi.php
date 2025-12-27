@@ -19,6 +19,8 @@ class BastTransaksi extends Model
         'id_pengurus_barang',
         'id_bast_status',
         'nomor_surat',
+        'surat_pesanan_path',
+        'surat_pesanan_file',
         'created_by',
         'updated_by',
         'deleted_by'

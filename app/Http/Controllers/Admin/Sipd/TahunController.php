@@ -8,7 +8,7 @@ use App\Models\Tahun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Yajra\DataTables\Facades\DataTables;
-
+use App\Models\VaCabdin;
 class TahunController extends Controller
 {
     public function index()
@@ -30,4 +30,19 @@ class TahunController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+    public function store(Request $request)
+    {
+        Tahun::create([
+            'nama' => $request->nama,
+            'jenis' => $request->jenis,
+        ]);
+
+        return response()->json(['success' => true]);
+    }
+    public function cabdin(Request $request)
+    {
+        $data = VaCabdin::orderBy('no','ASC')->get();
+        return view('admin.sipd.tahun.va',compact('data'));
+    }
+
 }

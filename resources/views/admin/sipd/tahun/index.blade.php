@@ -42,8 +42,17 @@
         <form id="formStatus">
           <input type="hidden" id="status_id">
           <div class="mb-3">
-            <label for="nama" class="form-label">Nama Status</label>
+            <label for="nama" class="form-label">Nama</label>
             <input type="text" name="nama" id="nama" class="form-control mb-2" placeholder="Nama Status">
+            </div>
+            <div class="mb-3">
+            <label for="jenis" class="form-label">jenis</label>
+            <select name="jenis" id="jenis" class="form-control mb-2">
+                <option value="sma">sma</option>
+                <option value="smk">smk</option>
+                <option value="slb">slb</option>
+            </select>
+            
             </div>
         </form>
       </div>
@@ -90,7 +99,7 @@
 
         $('#btnSave').on('click', function () {
             let id = $('#status_id').val();
-            let url = id ? `/status/update/${id}` : '{{ route('status.store') }}';
+            let url = id ? `/status/update/${id}` : '{{ route('sipd.tahun.store') }}';
 
             $.post(url, $('#formStatus').serialize(), function () {
                 $('#statusModal').modal('hide');

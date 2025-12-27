@@ -18,7 +18,11 @@ use App\Http\Controllers\Admin\SkpPegawaiDetailController;
 use App\Http\Controllers\Admin\Sipd\TahunController;
 use App\Http\Controllers\Admin\Sipd\DpaController;
 
-
+use App\Http\Controllers\Admin\Bast\BastMsNomorBaController;
+use App\Http\Controllers\Admin\Bast\BastPengurusbarangController;
+use App\Http\Controllers\Admin\Bast\BastSatuanController;
+use App\Http\Controllers\Admin\Bast\BastStatusController;
+use App\Http\Controllers\Admin\Bast\BastUnitKerjaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -109,16 +113,27 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
     Route::post('/skp-pegawai-detail/import', [SkpPegawaiDetailController::class, 'import'])->name('skp-pegawai-detail.import');
     // SIPD Routes
     Route::prefix('sipd-ri')->group(function () {
-    Route::get('/tahun', [TahunController::class, 'index'])->name('sipd.tahun.index');
-    Route::get('/tahun/data', [TahunController::class, 'data'])->name('sipd.tahun.data');
-    Route::get('/dpa/{jenis}', [DpaController::class, 'index'])->name('sipd.dpa.index');
-    Route::post('/dpa/data/{jenis}', [DpaController::class, 'data'])->name('sipd.dpa.data');
+        Route::get('/tahun', [TahunController::class, 'index'])->name('sipd.tahun.index');
+        Route::get('/tahun/data', [TahunController::class, 'data'])->name('sipd.tahun.data');
+        Route::post('/tahun/store', [TahunController::class, 'store'])->name('sipd.tahun.store');
+        //dpa
+        Route::get('/dpa/{jenis}', [DpaController::class, 'index'])->name('sipd.dpa.index');
+        Route::post('/dpa/data/{jenis}', [DpaController::class, 'data'])->name('sipd.dpa.data');
+        Route::get('/dpa-create', [DpaController::class, 'create'])->name('sipd.dpa.create');
+        Route::post('/dpa-store', [DpaController::class, 'store'])->name('sipd.dpa.store');
 
     });
     Route::prefix('sippol')->group(function () {
         Route::get('/view-bp22', [DashboardController::class, 'bpduadua'])->name('sippol.view.bp22');
         Route::post('/read-bp22', [DashboardController::class, 'readExcel'])->name('sipd.read.bp22');
 
+    });
+    Route::prefix('sippol')->group(function () {
+        Route::resource('bast-ms-nomor-bas', BastMsNomorBaController::class);
+        Route::resource('bast-pengurusbarangs', BastPengurusbarangController::class);
+        Route::resource('bast-satuans', BastSatuanController::class);
+        Route::resource('bast-statuss', BastStatusController::class);
+        Route::resource('bast-unit-kerjas', BastUnitKerjaController::class);
     });
 });
 

@@ -4,14 +4,15 @@ namespace App\Models\Bast;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class BastUnitKerja extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory,  SoftDeletes;
     protected $table = 'bpopp.bast_unit_kerja';
     public $timestamps = true;
+
 
     protected $fillable = [
         'nama_unit_kerja',
@@ -32,6 +33,7 @@ class BastUnitKerja extends Model
     {
         static::creating(function ($model) {
             if (auth()->check()) {
+                $model->uuid = (string) Str::uuid();
                 $model->created_by = auth()->id();
                 $model->updated_by = auth()->id();
             }

@@ -5,14 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Tahun extends Model
+class VaCabdin extends Model
 {
     use HasFactory;
-    protected $table = 'sipdri.tahun';
-    protected $primaryKey = 'id_tahun';
+    protected $table = 'sipdri.va_cabdin';
+    protected $primaryKey = 'no';
     public $timestamps = false;
-    protected $fillable = [
-        'nama',
-        'jenis',
-    ];
 }

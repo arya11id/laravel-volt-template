@@ -71,4 +71,45 @@ class DpaController extends Controller
                 ->make(true);
         }
     }
+    public function create()
+    {
+        //
+        return view('admin.sipd.dpa.create');
+    }
+    public function store(Request $request)
+    {
+        // ✅ Validasi
+        $request->validate([
+            'id_rinci_sub_bl' => 'required|file|mimes:json|max:5120',
+            'id_subs_sub_bl' => 'required|file|mimes:json|max:5120',
+            'id_ket_sub_bl' => 'required|file|mimes:json|max:5120',
+        ]);
+
+        // ✅ Ambil file
+        $file1 = $request->file('id_rinci_sub_bl');
+        $file2 = $request->file('id_subs_sub_bl');
+        $file3 = $request->file('id_ket_sub_bl');
+
+
+        // ✅ Baca isi JSON langsung (TANPA simpan)
+        $json1 = json_decode(file_get_contents($file1->getRealPath()), true);
+        $json2 = json_decode(file_get_contents($file2->getRealPath()), true);
+        $json3 = json_decode(file_get_contents($file3->getRealPath()), true);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return back()->withErrors('File JSON tidak valid');
+        }
+
+        // 🔎 Contoh akses data
+        // $json['data'][0]['name']
+
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'id_rinci_sub_bl' => $json1,
+                'id_subs_sub_bl' => $json2,
+                'id_ket_sub_bl' => $json3,
+            ],
+        ]);
+    }
 }

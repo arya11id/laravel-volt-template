@@ -17,6 +17,7 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive py-4">
+            <a href="{{ route('sipd.dpa.create') }}" class="btn btn-primary mb-3" >Tambah Status</a>
             <table class="table table-bordered" id="statusTable">
                 <thead>
                     <tr>

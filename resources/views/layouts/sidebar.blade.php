@@ -122,6 +122,50 @@
                 </li>
                 <li class="nav-item">
                     <span class="nav-link collapsed d-flex justify-content-between align-items-center"
+                        data-bs-toggle="collapse" data-bs-target="#submenu-bast">
+                        <span>
+                            <span class="sidebar-icon">
+                                <i class="fas fa-table"></i>
+                            </span>
+                            <span class="sidebar-text">BAST</span>
+                        </span>
+                        <span class="link-arrow">
+                            <i class="fas fa-chevron-right"></i>
+                        </span>
+                    </span>
+                    <div class="multi-level collapse" role="list" id="submenu-bast">
+                        <ul class="flex-column nav">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('bast-unit-kerjas.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> lembaga</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('bast-ms-nomor-bas.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Master Nomor</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('bast-pengurusbarangs.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Master Pengurus Barang</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('bast-satuans.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Satuan</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('bast-statuss.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Satuan</span>
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <span class="nav-link collapsed d-flex justify-content-between align-items-center"
                         data-bs-toggle="collapse" data-bs-target="#submenu-sippol">
                         <span>
                             <span class="sidebar-icon">

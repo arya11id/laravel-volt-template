@@ -28,6 +28,8 @@ class BastTrsBastBarang extends Model
         'barang_file_path_c',
         'barang_file_name_d',
         'barang_file_path_d',
+        'tgl_selesai_nego',
+        'tgl_datang_barang',
         'created_by',
         'updated_by',
         'deleted_by'
