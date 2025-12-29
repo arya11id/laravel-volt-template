@@ -5,6 +5,7 @@ namespace App\Models\Bast;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class BastTransaksi extends Model
 {
@@ -47,5 +48,21 @@ class BastTransaksi extends Model
                 $model->save();
             }
         });
+    }
+    public function bastUnitKerja()
+    {
+        return $this->belongsTo(BastUnitKerja::class, 'id_bast_unit_kerja');
+    }
+    public function bastTrsNomorBa()
+    {
+        return $this->belongsTo(BastTrsNomorBa::class, 'id_trs_nomor_ba');
+    }
+    public function bastPengurusbarang()
+    {
+        return $this->belongsTo(BastPengurusbarang::class, 'id_pengurus_barang');
+    }
+    public function bastStatus()
+    {
+        return $this->belongsTo(BastStatus::class, 'id_bast_status');
     }
 }

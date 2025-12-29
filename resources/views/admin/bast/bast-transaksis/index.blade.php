@@ -19,7 +19,6 @@
                             <th>ID_PENGURUS_BARANG</th>
                             <th>ID_BAST_STATUS</th>
                             <th>NOMOR_SURAT</th>
-                            <th>SURAT_PESANAN_PATH</th>
                             <th>SURAT_PESANAN_FILE</th>
                             <th width="280px">Action</th>
                         </tr>
@@ -40,7 +39,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="bastTransaksiForm" name="bastTransaksiForm" class="form-horizontal">
+                <form id="bastTransaksiForm" name="bastTransaksiForm" class="form-horizontal" enctype="multipart/form-data">
                    <input type="hidden" name="id" id="bastTransaksi_id">
                    
                    
@@ -55,28 +54,39 @@
                             </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="id_trs_nomor_ba" class="control-label mb-1">Id_trs_nomor_ba</label>
-                            <input type="number" class="form-control" id="id_trs_nomor_ba" name="id_trs_nomor_ba" placeholder="Enter Id_trs_nomor_ba">
+                            <label for="id_trs_nomor_ba" class="control-label mb-1">master trs_nomor_ba</label>
+                           <select id='id_trs_nomor_ba' name='id_trs_nomor_ba' class="form-control select9" style="width: 100%">
+                                <option value="">--Pilih--</option>
+                                @foreach ($BastTrsNomorBa as $list)
+                                    <option value="{{ $list->id }}">{{ $list->bastMsNomorBa->no_a . '/' . $list->bastMsNomorBa->no_b . '/'.$list->no_c.'/' . $list->bastMsNomorBa->no_d . '/' . $list->bastMsNomorBa->no_e }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="id_pengurus_barang" class="control-label mb-1">Id_pengurus_barang</label>
-                            <input type="number" class="form-control" id="id_pengurus_barang" name="id_pengurus_barang" placeholder="Enter Id_pengurus_barang">
+                            <label for="id_pengurus_barang" class="control-label mb-1">pengurus_barang</label>
+                            <select id='id_pengurus_barang' name='id_pengurus_barang' class="form-control select9" style="width: 100%">
+                                <option value="">--Pilih--</option>
+                                @foreach ($BastPengurusbarang as $list)
+                                    <option value="{{ $list->id }}">{{ $list->nama_pengurus }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group mb-3">
-                            <label for="id_bast_status" class="control-label mb-1">Id_bast_status</label>
-                            <input type="number" class="form-control" id="id_bast_status" name="id_bast_status" placeholder="Enter Id_bast_status">
+                            <label for="id_bast_status" class="control-label mb-1">bast_status</label>
+                            <select id='id_bast_status' name='id_bast_status' class="form-control select9" style="width: 100%">
+                                <option value="">--Pilih--</option>
+                                @foreach ($BastStatus as $list)
+                                    <option value="{{ $list->id }}">{{ $list->nama_status }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="nomor_surat" class="control-label mb-1">Nomor_surat</label>
                             <input type="text" class="form-control" id="nomor_surat" name="nomor_surat" placeholder="Enter Nomor_surat">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="surat_pesanan_path" class="control-label mb-1">Surat_pesanan_path</label>
-                            <input type="text" class="form-control" id="surat_pesanan_path" name="surat_pesanan_path" placeholder="Enter Surat_pesanan_path">
-                        </div>
-                        <div class="form-group mb-3">
                             <label for="surat_pesanan_file" class="control-label mb-1">Surat_pesanan_file</label>
-                            <input type="text" class="form-control" id="surat_pesanan_file" name="surat_pesanan_file" placeholder="Enter Surat_pesanan_file">
+                            <input type="file" class="form-control" id="surat_pesanan_file" name="surat_pesanan_file">
                         </div>
 
                     <div class="col-sm-offset-2 col-sm-10 mt-3">
@@ -119,13 +129,12 @@
         ajax: "{{ route('bast-transaksis.index') }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'id_bast_unit_kerja', name: 'id_bast_unit_kerja'},
-                    {data: 'id_trs_nomor_ba', name: 'id_trs_nomor_ba'},
-                    {data: 'id_pengurus_barang', name: 'id_pengurus_barang'},
-                    {data: 'id_bast_status', name: 'id_bast_status'},
+            {data: 'bast_unit_kerja', name: 'bast_unit_kerja'},
+                    {data: 'bast_trs_nomor_ba', name: 'bast_trs_nomor_ba'},
+                    {data: 'bast_pengurus_barang', name: 'bast_pengurus_barang'},
+                    {data: 'bast_status', name: 'bast_status'},
                     {data: 'nomor_surat', name: 'nomor_surat'},
-                    {data: 'surat_pesanan_path', name: 'surat_pesanan_path'},
-                    {data: 'surat_pesanan_file', name: 'surat_pesanan_file'},
+                    {data: 'surat_pesanan', name: 'surat_pesanan'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
@@ -162,11 +171,15 @@
         e.preventDefault();
         $(this).html('Sending..');
     
+        var formData = new FormData($('#bastTransaksiForm')[0]);
+        
         $.ajax({
-            data: $('#bastTransaksiForm').serialize(),
+            data: formData,
             url: "{{ route('bast-transaksis.store') }}",
             type: "POST",
             dataType: 'json',
+            contentType: false,
+            processData: false,
             success: function (data) {
                 $('#bastTransaksiForm').trigger("reset");
                 $('#ajaxModel').modal('hide');

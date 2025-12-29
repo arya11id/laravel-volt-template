@@ -53,4 +53,8 @@ class BastMsNomorBaController extends Controller
         BastMsNomorBa::find($id)->delete();
         return response()->json(['success' => 'BastMsNomorBa deleted successfully.']);
     }
+    public function fetchAll()
+    {
+        return BastMsNomorBa::latest()->get();
+    }
 }

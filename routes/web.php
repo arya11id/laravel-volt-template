@@ -25,6 +25,7 @@ use App\Http\Controllers\Admin\Bast\BastStatusController;
 use App\Http\Controllers\Admin\Bast\BastUnitKerjaController;
 use App\Http\Controllers\Admin\Bast\BastTransaksiController;
 use App\Http\Controllers\Admin\Bast\BastTrsNomorBaController;
+use App\Http\Controllers\Admin\Bast\BastTrsBastBarangController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -141,6 +142,12 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::resource('bast-unit-kerjas', BastUnitKerjaController::class);
         Route::resource('bast-transaksis', BastTransaksiController::class);
         Route::resource('bast-trs-nomor-bas', BastTrsNomorBaController::class);
+        Route::get('/download-file/{id}', [BastTransaksiController::class, 'downloadFile'])->name('bast-transaksis-download-file');
+        Route::get('/bast-trs-bast-barangs/index/{id}', [BastTrsBastBarangController::class, 'show'])->name('bast-trs-bast-barangs.index');
+        Route::get('/bast-trs-bast-barangs/data/{id}', [BastTrsBastBarangController::class, 'data'])->name('bast-trs-bast-barangs.data');
+        Route::post('/bast-trs-bast-barangs/store', [BastTrsBastBarangController::class, 'store'])->name('bast-trs-bast-barangs.store');
+        Route::get('/bast-trs-bast-barangs/edit/{id}', [BastTrsBastBarangController::class, 'edit'])->name('bast-trs-bast-barangs.edit');
+        Route::delete('/bast-trs-bast-barangs/destroy/{id}', [BastTrsBastBarangController::class, 'destroy'])->name('bast-trs-bast-barangs.destroy');
     });
 });
 
