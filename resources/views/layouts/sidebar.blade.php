@@ -146,6 +146,11 @@
                                 </a>
                             </li>
                             <li class="nav-item">
+                                <a class="nav-link" href="{{ route('bast-trs-nomor-bas.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Transaksi Nomor BAST</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link" href="{{ route('bast-pengurusbarangs.index') }}">
                                     <span class="sidebar-text"><i class="fas fa-user"></i> Master Pengurus Barang</span>
                                 </a>
@@ -157,7 +162,12 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('bast-statuss.index') }}">
-                                    <span class="sidebar-text"><i class="fas fa-user"></i> Satuan</span>
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Status</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('bast-transaksis.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Transaksi</span>
                                 </a>
                             </li>
                             

@@ -17,7 +17,9 @@
 <div class="card">
     <div class="card-body">
         <div class="table-responsive py-4">
-            <a href="{{ route('sipd.dpa.create') }}" class="btn btn-primary mb-3" >Tambah Status</a>
+            <button class="btn btn-primary mb-3" id="btnAdd">Tambah</button>
+            <button class="btn btn-primary mb-3" id="bersih">Refresh</button>
+            <button class="btn btn-primary mb-3" id="rekap">Rekap Sekolah</button>
             <table class="table table-bordered" id="statusTable">
                 <thead>
                     <tr>
@@ -80,16 +82,68 @@
       </div>
       <div class="modal-body">
         <form id="formStatus">
-          <input type="hidden" id="status_id">
-          <div class="mb-3">
-            <label for="nama" class="form-label">Nama Status</label>
-            <input type="text" name="nama" id="nama" class="form-control mb-2" placeholder="Nama Status">
+          <input type="hidden" id="jenis" name="jenis" value="{{ $jenis }}">
+            <div class="mb-3">
+                <label for="nama" class="form-label">id_ket_sub_bl</label>
+                <input type="file" id="id_ket_sub_bl" class="form-control mb-2" name="id_ket_sub_bl" accept=".json" required>
+            </div>
+            <div class="mb-3">
+                <label for="nama" class="form-label">Nama id_subs_sub_bl</label>
+                <input type="file" id="id_subs_sub_bl" class="form-control mb-2" name="id_subs_sub_bl" accept=".json" required>
+            </div>
+            <div class="mb-3">
+                <label for="nama" class="form-label">id_rinci_sub_bl</label>
+                <input type="file" id="id_rinci_sub_bl" class="form-control mb-2" name="id_rinci_sub_bl" accept=".json" required>
             </div>
         </form>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
         <button type="button" class="btn btn-primary" id="btnSave">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="statusBersih" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Bersihkan Data</h5>
+      </div>
+      <div class="modal-body">
+        <form id="formBersih">
+          <input type="hidden" id="jenis" name="jenis" value="{{ $jenis }}">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-primary" id="btnSmpn">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="rekapSekolahx" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Rekap Persekolah</h5>
+      </div>
+      <div class="modal-body">
+        <table class="table table-bordered" id="rekapTable">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Nama Sekolah</th>
+                    <th>Total Sesudah</th>
+                </tr>
+            </thead>
+            <tbody id="rekapBody">
+                {{-- Data akan dimuat di sini --}}
+            </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
       </div>
     </div>
   </div>
@@ -194,44 +248,77 @@
             $('#bm').on('change', function() {
                 table.draw(); // Redraw the table with the updated filter
             });
-    });
-    
-    $(function () {
-        // let table = $('#statusTable').DataTable({
-        //     processing: true,
-        //     serverSide: true,
-        //     ajax: '{{ route('sipd.dpa.data',$jenis) }}',
-        //     columns: [
-        //         {data: 'DT_RowIndex', name: 'DT_RowIndex', orderable: false, searchable: false},
-        //         {data: 'kode_akun', name: 'kode_akun'},
-        //         {data: 'nama_akun', name: 'nama_akun'},
-        //         {data: 'subs_bl_teks', name: 'subs_bl_teks'},
-        //         {data: 'nama_standar_harga', name: 'nama_standar_harga'},
-        //         {data: 'spek', name: 'spek'},
-        //         {data: 'koefisien_sebelum', name: 'koefisien_sebelum'},
-        //         {data: 'harga_awal', name: 'harga_awal'},
-        //         {data: 'total_awal', name: 'total_awal'},
-        //         {data: 'koefisien_setelah', name: 'koefisien_setelah'},
-        //         {data: 'harga_akhir', name: 'harga_akhir'},
-        //         {data: 'total_akhir', name: 'total_akhir'},
-        //         {data: 'selisih', name: 'selisih'},
-        //         {data: 'action', name: 'action', orderable: false, searchable: false},
-        //     ]
-        // });
+       
 
         $('#btnAdd').on('click', function () {
             $('#formStatus')[0].reset();
             $('#status_id').val('');
             $('#statusModal').modal('show');
         });
+        $('#bersih').on('click', function () {
+            $('#formBersih')[0].reset();
+            $('#statusBersih').modal('show');
+        });
+        $('#rekap').on('click', function () {
+            $('#formBersih')[0].reset();
+            $('#rekapSekolahx').modal('show');
+            $.get("{{ route('sipd.dpa.rekap-sekolah', $jenis) }}", function(data) {
+                let tbody = '';
+                data.forEach(function(item, index) {
+                    tbody += `<tr>
+                        <td>${index + 1}</td>
+                        <td>${item.subs_bl_teks}</td>
+                        <td>${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.total_setelah)}</td>
+                    </tr>`;
+                });
+                $('#rekapBody').html(tbody);
+            });
+        });
 
         $('#btnSave').on('click', function () {
-            let id = $('#status_id').val();
-            let url = id ? `/status/update/${id}` : '{{ route('status.store') }}';
-
-            $.post(url, $('#formStatus').serialize(), function () {
-                $('#statusModal').modal('hide');
-                table.ajax.reload();
+            let formData = new FormData($('#formStatus')[0]);
+            
+            $.ajax({
+                url: "{{ route('sipd.dpa.store') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    $('#btnSave').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
+                },
+                success: function (response) {
+                    $('#statusModal').modal('hide');
+                    table.draw();
+                    $('#btnSave').prop('disabled', false).html('Simpan');
+                },
+                error: function(xhr) {
+                    alert('Error: ' + xhr.responseJSON.message);
+                    $('#btnSave').prop('disabled', false).html('Simpan');
+                }
+            });
+        });
+        $('#btnSmpn').on('click', function () {
+            let formData = new FormData($('#formBersih')[0]);
+            
+            $.ajax({
+                url: "{{ route('sipd.dpa.bersih') }}",
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function() {
+                    $('#btnSmpn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
+                },
+                success: function (response) {
+                    $('#statusBersih').modal('hide');
+                    table.draw();
+                    $('#btnSmpn').prop('disabled', false).html('Simpan');
+                },
+                error: function(xhr) {
+                    alert('Error: ' + xhr.responseJSON.message);
+                    $('#btnSmpn').prop('disabled', false).html('Simpan');
+                }
             });
         });
 

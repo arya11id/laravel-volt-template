@@ -4,12 +4,12 @@ namespace App\Models\Bast;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class BastTrsNomorBa extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory, SoftDeletes;
     protected $table = 'bpopp.bast_trs_nomor_ba';
     public $timestamps = true;
 
@@ -26,6 +26,7 @@ class BastTrsNomorBa extends Model
     {
         static::creating(function ($model) {
             if (auth()->check()) {
+                $model->uuid = (string) Str::uuid();
                 $model->created_by = auth()->id();
                 $model->updated_by = auth()->id();
             }
@@ -43,5 +44,9 @@ class BastTrsNomorBa extends Model
                 $model->save();
             }
         });
+    }
+    public function bastMsNomorBa()
+    {
+        return $this->belongsTo(BastMsNomorBa::class, 'id_bast_ms_nomor_ba');
     }
 }

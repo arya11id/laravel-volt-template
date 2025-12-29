@@ -102,14 +102,69 @@ class DpaController extends Controller
 
         // 🔎 Contoh akses data
         // $json['data'][0]['name']
-
-        return response()->json([
-            'status' => true,
-            'data' => [
-                'id_rinci_sub_bl' => $json1,
-                'id_subs_sub_bl' => $json2,
-                'id_ket_sub_bl' => $json3,
-            ],
-        ]);
+        try {
+            DB::transaction(function () use ($json1, $json2, $json3, $request) {
+                foreach ($json1['data'] as $item) {
+                    $item['id_tahun'] = $request->jenis;
+                    DB::table('sipdri.rinci_sub_bl')->insert($item);
+                }
+                foreach ($json2['data'] as $itemx) {
+                    $itemx['id_tahun'] = $request->jenis;
+                    DB::table('sipdri.unit_kerja')->insert($itemx);
+                }
+                foreach ($json3['data'] as $itemz) {
+                    $itemz['id_tahun'] = $request->jenis;
+                    DB::table('sipdri.ket_sub_bl')->insert($itemz);
+                }
+            });
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil disimpan'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    public function bersih(Request $request)
+    {
+        //
+        try {
+            DB::transaction(function () use ($request) {
+                DB::table('sipdri.rinci_sub_bl')->where('id_tahun', $request->jenis)->delete();
+                DB::table('sipdri.unit_kerja')->where('id_tahun', $request->jenis)->delete();
+                DB::table('sipdri.ket_sub_bl')->where('id_tahun', $request->jenis)->delete();
+            });
+            return response()->json([
+                'status' => true,
+                'message' => 'Data berhasil dibersihkan'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Error: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+    public function rekapSekolah($id)
+    {
+        //
+        $data = DB::select("SELECT
+                uk.id_subs_sub_bl,
+                uk.subs_bl_teks,
+                SUM(rb.total_harga) AS total_setelah
+                FROM
+                sipdri.rinci_sub_bl rb
+                LEFT JOIN (SELECT DISTINCT id_subs_sub_bl, subs_bl_teks, id_tahun FROM sipdri.unit_kerja WHERE id_tahun = ?) uk ON rb.id_subs_sub_bl = uk.id_subs_sub_bl
+                WHERE
+                rb.id_tahun = ?
+                GROUP BY
+                uk.id_subs_sub_bl,
+                uk.subs_bl_teks
+                ORDER BY
+                subs_bl_teks", [$id, $id]);
+        return response()->json($data);
     }
 }

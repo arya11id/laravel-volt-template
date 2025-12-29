@@ -23,6 +23,8 @@ use App\Http\Controllers\Admin\Bast\BastPengurusbarangController;
 use App\Http\Controllers\Admin\Bast\BastSatuanController;
 use App\Http\Controllers\Admin\Bast\BastStatusController;
 use App\Http\Controllers\Admin\Bast\BastUnitKerjaController;
+use App\Http\Controllers\Admin\Bast\BastTransaksiController;
+use App\Http\Controllers\Admin\Bast\BastTrsNomorBaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -116,11 +118,14 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::get('/tahun', [TahunController::class, 'index'])->name('sipd.tahun.index');
         Route::get('/tahun/data', [TahunController::class, 'data'])->name('sipd.tahun.data');
         Route::post('/tahun/store', [TahunController::class, 'store'])->name('sipd.tahun.store');
+       
         //dpa
         Route::get('/dpa/{jenis}', [DpaController::class, 'index'])->name('sipd.dpa.index');
         Route::post('/dpa/data/{jenis}', [DpaController::class, 'data'])->name('sipd.dpa.data');
         Route::get('/dpa-create', [DpaController::class, 'create'])->name('sipd.dpa.create');
         Route::post('/dpa-store', [DpaController::class, 'store'])->name('sipd.dpa.store');
+        Route::post('/dpa-bersih', [DpaController::class, 'bersih'])->name('sipd.dpa.bersih');
+        Route::get('/dpa-rekap-sekolah/{id}', [DpaController::class, 'rekapSekolah'])->name('sipd.dpa.rekap-sekolah');
 
     });
     Route::prefix('sippol')->group(function () {
@@ -134,6 +139,8 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::resource('bast-satuans', BastSatuanController::class);
         Route::resource('bast-statuss', BastStatusController::class);
         Route::resource('bast-unit-kerjas', BastUnitKerjaController::class);
+        Route::resource('bast-transaksis', BastTransaksiController::class);
+        Route::resource('bast-trs-nomor-bas', BastTrsNomorBaController::class);
     });
 });
 
