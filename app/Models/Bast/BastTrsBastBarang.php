@@ -58,4 +58,8 @@ class BastTrsBastBarang extends Model
             }
         });
     }
+    public function satuan()
+    {
+        return $this->belongsTo(BastSatuan::class, 'id_bast_satuan');
+    }
 }

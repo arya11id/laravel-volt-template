@@ -21,8 +21,8 @@ class BastTransaksiController extends Controller
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
-                    $btn = '<a href="'.route('bast-trs-bast-barangs.index', ['id' => $row->id]).'" class="edit btn btn-primary btn-sm">barang</a>';
-                    $btn = $btn.'<a href="javascript:void(0)" data-id="'.$row->id.'" class="edit btn btn-primary btn-sm editBastTransaksi">Edit</a>';
+                    $btn = '<a href="'.route('bast-trs-bast-barangs.index', ['id' => $row->id]).'" class="edit btn btn-success btn-sm">barang</a>';
+                    $btn = $btn.' <a href="javascript:void(0)" data-id="'.$row->id.'" class="edit btn btn-primary btn-sm editBastTransaksi">Edit</a>';
                     $btn = $btn.' <a href="javascript:void(0)" data-id="'.$row->id.'" class="btn btn-danger btn-sm deleteBastTransaksi">Delete</a>';
                     return $btn;
                 })
@@ -41,9 +41,13 @@ class BastTransaksiController extends Controller
                 })
                 ->addColumn('surat_pesanan', function($row){
                     $downloadUrl = route('bast-transaksis-download-file', ['id' => $row->uuid]);
-                    return '<a href="'.$downloadUrl.'" class="btn btn-success btn-sm">Download File</a>';
-                })  
-                ->rawColumns(['action', 'bast_unit_kerja', 'bast_trs_nomor_ba', 'bast_pengurus_barang', 'bast_status', 'surat_pesanan'])
+                    $btn = '<a href="'.route('bast-trs-bast-barangs.cetakPdf', $row->uuid).'" class="edit btn btn-danger btn-sm" target="_blank">cetak</a>';
+                    return '<a href="'.$downloadUrl.'" class="btn btn-success btn-sm">Download File</a> '.$btn;
+                })
+                ->addColumn('no_surat', function($row){
+                    return $row->bastTrsNomorBa->no_c .'.'. $row->nomor_surat;
+                })
+                ->rawColumns(['action', 'bast_unit_kerja', 'bast_trs_nomor_ba', 'bast_pengurus_barang', 'bast_status', 'surat_pesanan', 'no_surat'])
                 ->make(true);
         }
         $BastUnitKerja = BastUnitKerja::orderBy('no_urut','ASC')->get();
@@ -64,7 +68,9 @@ class BastTransaksiController extends Controller
             'nomor_surat' => 'required|string',
             'surat_pesanan_file' => 'nullable|file|mimes:pdf,doc,docx|max:2048',
         ]);
-
+        $cek = BastTransaksi::where('id_trs_nomor_ba', $request->id_trs_nomor_ba)
+                ->where('nomor_surat', $request->nomor_surat)
+                ->count();
         $data = $request->only(['id_bast_unit_kerja', 'id_trs_nomor_ba', 'id_pengurus_barang', 'id_bast_status', 'nomor_surat']);
 
         if ($request->hasFile('surat_pesanan_file')) {

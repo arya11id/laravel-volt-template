@@ -148,6 +148,9 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::post('/bast-trs-bast-barangs/store', [BastTrsBastBarangController::class, 'store'])->name('bast-trs-bast-barangs.store');
         Route::get('/bast-trs-bast-barangs/edit/{id}', [BastTrsBastBarangController::class, 'edit'])->name('bast-trs-bast-barangs.edit');
         Route::delete('/bast-trs-bast-barangs/destroy/{id}', [BastTrsBastBarangController::class, 'destroy'])->name('bast-trs-bast-barangs.destroy');
+        Route::get('/bast-trs-bast-barangs/show-file/{id}/{letter}', [BastTrsBastBarangController::class, 'showFile'])->name('bast-trs-bast-barangs.showFile');
+        Route::get('/bast-trs-bast-barangs/cetak-pdf/{uuid}', [BastTrsBastBarangController::class, 'cetakPdf'])->name('bast-trs-bast-barangs.cetakPdf');
+        Route::get('/bast-trs-bast-barangs/cetak-word/{uuid}', [BastTrsBastBarangController::class, 'cetakWord'])->name('bast-trs-bast-barangs.cetakWord');
     });
 });
 

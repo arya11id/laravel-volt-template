@@ -3,31 +3,31 @@
 @section('content')
 <div class="container">
     <div class="d-flex justify-content-between mb-4">
-        <h2>BastTrsBastBarangs Management</h2>
-        <a href="javascript:void(0)" class="btn btn-success" id="createNewBastTrsBastBarang"> Create New BastTrsBastBarang</a>
+        <h2>{{ $data->bastUnitKerja->nama_unit_kerja }} : {{ $data->bastTrsNomorBa->bastMsNomorBa->no_a . '/' . $data->bastTrsNomorBa->bastMsNomorBa->no_b }} /</H2><h2 class="text-danger">{{  $data->bastTrsNomorBa->no_c .'.'. $data->nomor_surat}}</H2><H2>/ {{ $data->bastTrsNomorBa->bastMsNomorBa->no_d . '/' . $data->bastTrsNomorBa->bastMsNomorBa->no_e }}</h2>
+        
     </div>
+    
+    <br>
 
     <div class="card">
         <div class="card-body">
+            <a href="javascript:void(0)" class="btn btn-success" id="createNewBastTrsBastBarang"> Create</a>
+    <a href="{{ route('bast-trs-bast-barangs.cetakPdf', $data->uuid) }}" class="btn btn-success" target="_blank"> Cetak </a>
+    <a href="{{ route('bast-trs-bast-barangs.cetakWord', $data->uuid) }}" class="btn btn-success" target="_blank"> Cetak Word </a>
             <div class="table-responsive py-4">
                 <table class="table table-bordered data-table">
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>ID_BAST_TRANSAKSI</th>
                             <th>JENIS</th>
                             <th>URAIAN</th>
                             <th>VOLUME</th>
                             <th>ID_BAST_SATUAN</th>
                             <th>HARGA_SATUAN</th>
                             <th>BARANG_FILE_NAME_A</th>
-                            <th>BARANG_FILE_PATH_A</th>
                             <th>BARANG_FILE_NAME_B</th>
-                            <th>BARANG_FILE_PATH_B</th>
                             <th>BARANG_FILE_NAME_C</th>
-                            <th>BARANG_FILE_PATH_C</th>
                             <th>BARANG_FILE_NAME_D</th>
-                            <th>BARANG_FILE_PATH_D</th>
                             <th>TGL_SELESAI_NEGO</th>
                             <th>TGL_DATANG_BARANG</th>
                             <th width="280px">Action</th>
@@ -65,44 +65,35 @@
                             <input type="text" class="form-control" id="volume" name="volume" placeholder="Enter Volume">
                         </div>
                         <div class="form-group mb-3">
-                            <label for="id_bast_satuan" class="control-label mb-1">Id_bast_satuan</label>
-                            <input type="number" class="form-control" id="id_bast_satuan" name="id_bast_satuan" placeholder="Enter Id_bast_satuan">
+                            <label for="id_bast_satuan" class="control-label mb-1">satuan</label>
+                            {{-- <input type="number" class="form-control" id="id_bast_satuan" name="id_bast_satuan" placeholder="Enter Id_bast_satuan"> --}}
+                            <select id='id_bast_satuan' name='id_bast_satuan' class="form-control select9" style="width: 100%">
+                                <option value="">--Pilih--</option>
+                                @foreach ($satuan as $list)
+                                    <option value="{{ $list->id }}">{{ $list->nama_satuan }}</option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="form-group mb-3">
                             <label for="harga_satuan" class="control-label mb-1">Harga_satuan</label>
-                            <input type="text" class="form-control" id="harga_satuan" name="harga_satuan" placeholder="Enter Harga_satuan">
+                            <input type="text" class="form-control" id="harga_satuan" name="harga_satuan" placeholder="Enter Harga_satuan" inputmode="numeric">
+                            <small class="form-text text-muted" id="harga_display">Rp 0</small>
                         </div>
                         <div class="form-group mb-3">
                             <label for="barang_file_name_a" class="control-label mb-1">Barang_file_name_a</label>
-                            <input type="text" class="form-control" id="barang_file_name_a" name="barang_file_name_a" placeholder="Enter Barang_file_name_a">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="barang_file_path_a" class="control-label mb-1">Barang_file_path_a</label>
-                            <input type="text" class="form-control" id="barang_file_path_a" name="barang_file_path_a" placeholder="Enter Barang_file_path_a">
+                            <input type="file" class="form-control" id="barang_file_name_a" name="barang_file_name_a">
                         </div>
                         <div class="form-group mb-3">
                             <label for="barang_file_name_b" class="control-label mb-1">Barang_file_name_b</label>
-                            <input type="text" class="form-control" id="barang_file_name_b" name="barang_file_name_b" placeholder="Enter Barang_file_name_b">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="barang_file_path_b" class="control-label mb-1">Barang_file_path_b</label>
-                            <input type="text" class="form-control" id="barang_file_path_b" name="barang_file_path_b" placeholder="Enter Barang_file_path_b">
+                            <input type="file" class="form-control" id="barang_file_name_b" name="barang_file_name_b">
                         </div>
                         <div class="form-group mb-3">
                             <label for="barang_file_name_c" class="control-label mb-1">Barang_file_name_c</label>
-                            <input type="text" class="form-control" id="barang_file_name_c" name="barang_file_name_c" placeholder="Enter Barang_file_name_c">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="barang_file_path_c" class="control-label mb-1">Barang_file_path_c</label>
-                            <input type="text" class="form-control" id="barang_file_path_c" name="barang_file_path_c" placeholder="Enter Barang_file_path_c">
+                            <input type="file" class="form-control" id="barang_file_name_c" name="barang_file_name_c">
                         </div>
                         <div class="form-group mb-3">
                             <label for="barang_file_name_d" class="control-label mb-1">Barang_file_name_d</label>
-                            <input type="text" class="form-control" id="barang_file_name_d" name="barang_file_name_d" placeholder="Enter Barang_file_name_d">
-                        </div>
-                        <div class="form-group mb-3">
-                            <label for="barang_file_path_d" class="control-label mb-1">Barang_file_path_d</label>
-                            <input type="text" class="form-control" id="barang_file_path_d" name="barang_file_path_d" placeholder="Enter Barang_file_path_d">
+                            <input type="file" class="form-control" id="barang_file_name_d" name="barang_file_name_d">
                         </div>
                         <div class="form-group mb-3">
                             <label for="tgl_selesai_nego" class="control-label mb-1">Tgl_selesai_nego</label>
@@ -136,6 +127,15 @@
 
 
 <script type="text/javascript">
+    $('#harga_satuan').on('keyup', function() {
+                                let value = $(this).val().replace(/\D/g, '');
+                                let formatted = new Intl.NumberFormat('id-ID', {
+                                    style: 'currency',
+                                    currency: 'IDR',
+                                    minimumFractionDigits: 0
+                                }).format(value || 0);
+                                $('#harga_display').text(formatted);
+                            });
   $(function () {
     
     // CSRF Token Setup
@@ -144,6 +144,7 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+    $('.select9').select2();
 
     // Render DataTable
     var table = $('.data-table').DataTable({
@@ -152,20 +153,15 @@
         ajax: "{{ route('bast-trs-bast-barangs.data', ['id' => $id]) }}",
         columns: [
             {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-            {data: 'id_bast_transaksi', name: 'id_bast_transaksi'},
                     {data: 'jenis', name: 'jenis'},
                     {data: 'uraian', name: 'uraian'},
                     {data: 'volume', name: 'volume'},
-                    {data: 'id_bast_satuan', name: 'id_bast_satuan'},
+                    {data: 'satuan.nama_satuan', name: 'satuan.nama_satuan'},
                     {data: 'harga_satuan', name: 'harga_satuan'},
-                    {data: 'barang_file_name_a', name: 'barang_file_name_a'},
-                    {data: 'barang_file_path_a', name: 'barang_file_path_a'},
-                    {data: 'barang_file_name_b', name: 'barang_file_name_b'},
-                    {data: 'barang_file_path_b', name: 'barang_file_path_b'},
-                    {data: 'barang_file_name_c', name: 'barang_file_name_c'},
-                    {data: 'barang_file_path_c', name: 'barang_file_path_c'},
-                    {data: 'barang_file_name_d', name: 'barang_file_name_d'},
-                    {data: 'barang_file_path_d', name: 'barang_file_path_d'},
+                    {data: 'barang_file_a', name: 'barang_file_a'},
+                    {data: 'barang_file_b', name: 'barang_file_b'},
+                    {data: 'barang_file_c', name: 'barang_file_c'},
+                    {data: 'barang_file_d', name: 'barang_file_d'},
                     {data: 'tgl_selesai_nego', name: 'tgl_selesai_nego'},
                     {data: 'tgl_datang_barang', name: 'tgl_datang_barang'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
@@ -184,7 +180,7 @@
     // Open Modal for Edit
     $('body').on('click', '.editBastTrsBastBarang', function () {
         var id = $(this).data('id');
-        $.get("{{ route('bast-trs-bast-barangs.index', ['id' => $id]) }}", function (data) {
+        $.get("{{ url('sippol/bast-trs-bast-barangs/edit') }}" + '/' + id, function (data) {
             $('#modelHeading').html("Edit BastTrsBastBarang");
             $('#saveBtn').val("edit-user");
             $('#ajaxModel').modal('show');
@@ -195,14 +191,6 @@
                 $('#volume').val(data.volume);
                 $('#id_bast_satuan').val(data.id_bast_satuan);
                 $('#harga_satuan').val(data.harga_satuan);
-                $('#barang_file_name_a').val(data.barang_file_name_a);
-                $('#barang_file_path_a').val(data.barang_file_path_a);
-                $('#barang_file_name_b').val(data.barang_file_name_b);
-                $('#barang_file_path_b').val(data.barang_file_path_b);
-                $('#barang_file_name_c').val(data.barang_file_name_c);
-                $('#barang_file_path_c').val(data.barang_file_path_c);
-                $('#barang_file_name_d').val(data.barang_file_name_d);
-                $('#barang_file_path_d').val(data.barang_file_path_d);
                 $('#tgl_selesai_nego').val(data.tgl_selesai_nego);
                 $('#tgl_datang_barang').val(data.tgl_datang_barang);
         })
@@ -213,11 +201,15 @@
         e.preventDefault();
         $(this).html('Sending..');
     
+        var formData = new FormData($('#bastTrsBastBarangForm')[0]);
+        
         $.ajax({
-            data: $('#bastTrsBastBarangForm').serialize(),
+            data: formData,
             url: "{{ route('bast-trs-bast-barangs.store') }}",
             type: "POST",
             dataType: 'json',
+            processData: false,
+            contentType: false,
             success: function (data) {
                 $('#bastTrsBastBarangForm').trigger("reset");
                 $('#ajaxModel').modal('hide');

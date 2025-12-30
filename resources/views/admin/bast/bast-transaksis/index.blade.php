@@ -14,10 +14,10 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>ID_BAST_UNIT_KERJA</th>
-                            <th>ID_TRS_NOMOR_BA</th>
-                            <th>ID_PENGURUS_BARANG</th>
-                            <th>ID_BAST_STATUS</th>
+                            <th>BAST_UNIT_KERJA</th>
+                            <th>TRS_NOMOR_BA</th>
+                            <th>PENGURUS_BARANG</th>
+                            <th>STATUS</th>
                             <th>NOMOR_SURAT</th>
                             <th>SURAT_PESANAN_FILE</th>
                             <th width="280px">Action</th>
@@ -133,7 +133,7 @@
                     {data: 'bast_trs_nomor_ba', name: 'bast_trs_nomor_ba'},
                     {data: 'bast_pengurus_barang', name: 'bast_pengurus_barang'},
                     {data: 'bast_status', name: 'bast_status'},
-                    {data: 'nomor_surat', name: 'nomor_surat'},
+                    {data: 'no_surat', name: 'no_surat'},
                     {data: 'surat_pesanan', name: 'surat_pesanan'},
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
