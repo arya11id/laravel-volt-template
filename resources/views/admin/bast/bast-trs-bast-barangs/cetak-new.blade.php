@@ -214,7 +214,7 @@
 
     <div class="title-container">
         <h4>BERITA ACARA PENYERAHAN BARANG BELANJA MODAL TAHUN 2025</h4>
-        <p>Nomor : {{ $data->bastTrsNomorBa->bastMsNomorBa->no_a . '/' . $data->bastTrsNomorBa->bastMsNomorBa->no_b }} / {{  $data->bastTrsNomorBa->no_c .'.'. $data->nomor_surat }} / {{ $data->bastTrsNomorBa->bastMsNomorBa->no_d . '/' . $data->bastTrsNomorBa->bastMsNomorBa->no_e }}</p>
+        <p>Nomor : {{ $data->bastTrsNomorBa->bastMsNomorBa->no_a . '/' . $data->bastTrsNomorBa->bastMsNomorBa->no_b }} / {{  $data->bastTrsNomorBa->no_c .' '. ($data->nomor_surat == 0 ? '' : ''.$data->nomor_surat) }} / {{ $data->bastTrsNomorBa->bastMsNomorBa->no_d . '/' . $data->bastTrsNomorBa->bastMsNomorBa->no_e }}</p>
     </div>
 
     <div class="content">

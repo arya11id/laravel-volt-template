@@ -20,6 +20,7 @@
             <button class="btn btn-primary mb-3" id="btnAdd">Tambah</button>
             <button class="btn btn-primary mb-3" id="bersih">Refresh</button>
             <button class="btn btn-primary mb-3" id="rekap">Rekap Sekolah</button>
+            <button class="btn btn-primary mb-3" id="rekapKodex">Rekap Kode Rekening</button>
             <table class="table table-bordered" id="statusTable">
                 <thead>
                     <tr>
@@ -141,6 +142,35 @@
                 {{-- Data akan dimuat di sini --}}
             </tbody>
         </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="rekapKode" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Rekap Persekolah</h5>
+      </div>
+      <div class="modal-body">
+        <div class="table-responsive">
+            <table class="table table-bordered table-sm" id="rekapTableKode">
+            <thead>
+                <tr>
+                    <th>No</th>
+                    <th>Kode Rekening</th>
+                    <th>Nama Rekening</th>
+                    <th>Total Sesudah</th>
+                </tr>
+            </thead>
+            <tbody id="rekapBodyKode">
+                {{-- Data akan dimuat di sini --}}
+            </tbody>
+            </table>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
@@ -272,6 +302,22 @@
                     </tr>`;
                 });
                 $('#rekapBody').html(tbody);
+            });
+        });
+        $('#rekapKodex').on('click', function () {
+            $('#formBersih')[0].reset();
+            $('#rekapKode').modal('show');
+            $.get("{{ route('sipd.dpa.rekap-kode-rekening', $jenis) }}", function(data) {
+                let tbody = '';
+                data.forEach(function(item, index) {
+                    tbody += `<tr>
+                        <td>${index + 1}</td>
+                        <td>${item.kode_akun}</td>
+                        <td style="word-wrap: break-word; white-space: normal; max-width: 200px;">${item.nama_akun}</td>
+                        <td>${new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(item.total_setelah)}</td>
+                    </tr>`;
+                });
+                $('#rekapBodyKode').html(tbody);
             });
         });
 

@@ -194,6 +194,11 @@
                                     <span class="sidebar-text"><i class="fas fa-user"></i> DATA</span>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('sippol-periodes.index') }}">
+                                    <span class="sidebar-text"><i class="fas fa-user"></i> Periode</span>
+                                </a>
+                            </li>
                             
                         </ul>
                     </div>

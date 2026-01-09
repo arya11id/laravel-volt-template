@@ -17,9 +17,13 @@ class DpaController extends Controller
 {
     public function index($jenis)
     {
-        $akun = Akun::where('id_tahun',$jenis)->get();
+        // $akun = Akun::where('id_tahun',$jenis)->get();
         $unit = SubsSubBl::where('id_tahun',$jenis)->get();
         $tahun = Tahun::where('id_tahun',$jenis)->first();
+        $akun = DB::table('sipdri.rinci_sub_bl')
+                ->where('id_tahun', $jenis)
+                ->distinct()
+                ->get(['kode_akun', 'nama_akun']);
         return view('admin.sipd.dpa.index', compact('akun','jenis','unit','tahun'));
     }
 
@@ -165,6 +169,25 @@ class DpaController extends Controller
                 uk.subs_bl_teks
                 ORDER BY
                 subs_bl_teks", [$id, $id]);
+        return response()->json($data);
+    }
+    public function rekapKodeRekening($id)
+    {
+        //
+        $data = DB::select(" SELECT
+                rb.kode_akun,
+                rb.nama_akun,
+                SUM(rb.total_harga) AS total_setelah
+                FROM
+                sipdri.rinci_sub_bl rb
+                LEFT JOIN (SELECT DISTINCT kode_akun, nama_akun, id_tahun FROM sipdri.rinci_sub_bl WHERE id_tahun = ?) uk ON rb.kode_akun = uk.kode_akun
+                WHERE
+                rb.id_tahun = ?
+                GROUP BY
+                rb.kode_akun,
+                rb.nama_akun
+                ORDER BY
+                rb.kode_akun", [$id, $id]);
         return response()->json($data);
     }
 }

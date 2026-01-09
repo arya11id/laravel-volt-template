@@ -26,6 +26,10 @@ use App\Http\Controllers\Admin\Bast\BastUnitKerjaController;
 use App\Http\Controllers\Admin\Bast\BastTransaksiController;
 use App\Http\Controllers\Admin\Bast\BastTrsNomorBaController;
 use App\Http\Controllers\Admin\Bast\BastTrsBastBarangController;
+
+//sippol
+use App\Http\Controllers\Admin\Sippol\SippolPeriodeController;
+use App\Http\Controllers\Admin\Sippol\SippolUnitKerjaController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -127,11 +131,22 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::post('/dpa-store', [DpaController::class, 'store'])->name('sipd.dpa.store');
         Route::post('/dpa-bersih', [DpaController::class, 'bersih'])->name('sipd.dpa.bersih');
         Route::get('/dpa-rekap-sekolah/{id}', [DpaController::class, 'rekapSekolah'])->name('sipd.dpa.rekap-sekolah');
+        Route::get('/dpa-rekap-kode-rekening/{id}', [DpaController::class, 'rekapKodeRekening'])->name('sipd.dpa.rekap-kode-rekening');
+
 
     });
     Route::prefix('sippol')->group(function () {
         Route::get('/view-bp22', [DashboardController::class, 'bpduadua'])->name('sippol.view.bp22');
         Route::post('/read-bp22', [DashboardController::class, 'readExcel'])->name('sipd.read.bp22');
+
+        Route::resource('sippol-periodes', SippolPeriodeController::class);
+        // Route::resource('sippol-unit-kerjas', SippolUnitKerjaController::class);
+         Route::get('/sippol-unit-kerjass/show/{id}', [SippolUnitKerjaController::class, 'show'])->name('sippol-unit-kerjas.show');
+        Route::get('/sippol-unit-kerjas/data/{id}', [SippolUnitKerjaController::class, 'data'])->name('sippol-unit-kerjas.data');
+        Route::post('/sippol-unit-kerjas/store', [SippolUnitKerjaController::class, 'store'])->name('sippol-unit-kerjas.store');
+        Route::get('/sippol-unit-kerjas/edit/{id}', [SippolUnitKerjaController::class, 'edit'])->name('sippol-unit-kerjas.edit');
+        Route::delete('/sippol-unit-kerjas/destroy/{id}', [SippolUnitKerjaController::class, 'destroy'])->name('sippol-unit-kerjas.destroy');
+
 
     });
     Route::prefix('sippol')->group(function () {
