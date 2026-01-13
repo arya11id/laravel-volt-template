@@ -11,6 +11,10 @@
     <div class="card">
         <div class="card-body">
             <a href="javascript:void(0)" class="btn btn-success" id="createNewSippolUnitKerja"> Create New SippolUnitKerja</a>
+            <a href="javascript:void(0)" class="btn btn-primary" id="createbp22">import bp22</a>
+            <button class="btn btn-danger" id="bersih">Refresh</button>
+            <a href="{{ route('sippol-jenis.show', $id) }}" class="btn btn-secondary">Rekap</a>
+            <a href="{{ route('sippol-jenis.final', $id) }}" class="btn btn-primary">Final</a>
             <div class="table-responsive py-4">
                 <table class="table table-bordered data-table">
                     <thead>
@@ -116,6 +120,49 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="ajaxModelBP" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modelHeading"></h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="simpanBp" name="simpanBp" class="form-horizontal" enctype="multipart/form-data">
+                   <input type="hidden" name="id" id="sippolUnitKerja_id">
+                            <input type="hidden" id="id_periode" name="id_periode" value="{{ $id }}">
+                            <div class="form-group mb-3">
+                                <label for="kode" class="control-label mb-1">file bp22</label>
+                                <input type="file" class="form-control" id="bp" name="bp">
+                            </div>                      
+                       
+
+                    <div class="col-sm-offset-2 col-sm-10 mt-3">
+                     <button type="submit" class="btn btn-primary" id="saveBp" value="create">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="statusBersih" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Bersihkan Data</h5>
+      </div>
+      <div class="modal-body">
+        <form id="formBersih">
+          <input type="hidden" id="id_periode" name="id_periode" value="{{ $id }}">
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-primary" id="btnSmpn">Simpan</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 @endsection
 @section('customCSS')
@@ -180,6 +227,9 @@
         $('#sippolUnitKerjaForm').trigger("reset");
         $('#modelHeading').html("Create New SippolUnitKerja");
         $('#ajaxModel').modal('show');
+    });
+    $('#createbp22').click(function () {
+        $('#ajaxModelBP').modal('show');
     });
 
     // Open Modal for Edit
@@ -298,6 +348,83 @@
                     title: 'Oops...',
                     text: errorMessage,
                 });
+            }
+        });
+    });
+    $('#saveBp').click(function (e) {
+        e.preventDefault();
+
+        let btn = $(this);
+        btn.prop('disabled', true).html('Sending...');
+
+        let form = $('#simpanBp')[0];
+        let formData = new FormData(form); // Correctly collects all form data, including the file input
+
+        $.ajax({
+            url: "{{ route('sippol-bp-dua-duas.store') }}",
+            type: "POST",
+            data: formData,
+            processData: false, // Required for file uploads to prevent jQuery from processing the data
+            contentType: false, // Required for file uploads to prevent jQuery from setting the Content-Type header
+            dataType: 'json',
+            success: function (response) {
+                $('#simpanBp')[0].reset();
+                $('#ajaxModelBP').modal('hide');
+                table.draw();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Success!',
+                    text: response.success ?? 'Data saved successfully',
+                });
+
+                btn.prop('disabled', false).html('Save Changes');
+            },
+            error: function (xhr) {
+                btn.prop('disabled', false).html('Save Changes');
+
+                let errorMessage = 'Something went wrong.';
+
+                if (xhr.status === 422) {
+                    // Laravel Validation Error
+                    let errors = xhr.responseJSON.errors;
+                    errorMessage = Object.values(errors).flat().join('\n');
+                } else if (xhr.responseJSON?.message) {
+                    errorMessage = xhr.responseJSON.message;
+                }
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: errorMessage,
+                });
+            }
+        });
+    });
+    $('#bersih').on('click', function () {
+            $('#formBersih')[0].reset();
+            $('#statusBersih').modal('show');
+    });
+    $('#btnSmpn').on('click', function () {
+        let formData = new FormData($('#formBersih')[0]);
+        
+        $.ajax({
+            url: "{{ route('sippol-bp-dua-duas.bersih') }}",
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function() {
+                $('#btnSmpn').prop('disabled', true).html('<span class="spinner-border spinner-border-sm me-2"></span>Loading...');
+            },
+            success: function (response) {
+                $('#statusBersih').modal('hide');
+                table.draw();
+                $('#btnSmpn').prop('disabled', false).html('Simpan');
+            },
+            error: function(xhr) {
+                alert('Error: ' + xhr.responseJSON.message);
+                $('#btnSmpn').prop('disabled', false).html('Simpan');
             }
         });
     });

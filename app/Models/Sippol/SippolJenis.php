@@ -4,14 +4,13 @@ namespace App\Models\Sippol;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
 
 class SippolJenis extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
+    use HasFactory;
+
     protected $table = 'bpopp.sippol_jenis';
-    public $timestamps = true;
 
     protected $fillable = [
         'nama_jenis',
@@ -19,15 +18,23 @@ class SippolJenis extends Model
         'nomor',
         'mulai',
         'akhir',
-        'is_bm'
+        'is_bm',
         'created_by',
         'updated_by',
-        'deleted_by'
+        'id_periode','id_kategori'
     ];
 
+    protected $casts = [
+        'urutan' => 'integer',
+        'nomor' => 'integer',
+        'mulai' => 'integer',
+        'akhir' => 'integer',
+        'is_bm' => 'integer'
+    ];
     protected static function booted()
     {
         static::creating(function ($model) {
+                    $model->uuid = (string) Str::uuid();
             if (auth()->check()) {
                 $model->created_by = auth()->id();
                 $model->updated_by = auth()->id();
@@ -37,13 +44,6 @@ class SippolJenis extends Model
         static::updating(function ($model) {
             if (auth()->check()) {
                 $model->updated_by = auth()->id();
-            }
-        });
-
-        static::deleting(function ($model) {
-            if (auth()->check()) {
-                $model->deleted_by = auth()->id();
-                $model->save();
             }
         });
     }

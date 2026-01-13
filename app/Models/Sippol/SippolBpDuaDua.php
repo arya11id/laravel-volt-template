@@ -4,14 +4,17 @@ namespace App\Models\Sippol;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Str;
+// use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SippolBastDetail extends Model
+class SippolBpDuaDua extends Model
 {
-    use HasFactory, HasUuids, SoftDeletes;
-    protected $table = 'bpopp.sippol_bast_detail';
-    public $timestamps = true;
+    use HasFactory;
+
+    protected $table = 'bpopp.sippol_bast_bpduadua';
+
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'id_periode',
@@ -30,9 +33,17 @@ class SippolBastDetail extends Model
         'deleted_by'
     ];
 
+    protected $casts = [
+        'id_periode' => 'integer',
+        'id_unit_kerja' => 'integer',
+        'penerimaan' => 'integer',
+        'pengeluaran' => 'integer',
+        'id_sippol_jenis' => 'integer'
+    ];
     protected static function booted()
     {
         static::creating(function ($model) {
+                    $model->uuid = (string) Str::uuid();
             if (auth()->check()) {
                 $model->created_by = auth()->id();
                 $model->updated_by = auth()->id();
