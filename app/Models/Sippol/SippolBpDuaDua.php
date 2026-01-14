@@ -63,4 +63,16 @@ class SippolBpDuaDua extends Model
             }
         });
     }
+    public function periode()
+    {
+        return $this->belongsTo(SippolPeriode::class, 'id_periode');
+    }
+    public function unitkerja()
+    {
+        return $this->belongsTo(SippolUnitKerja::class, 'id_unit_kerja');
+    }
+    public function jenisbp22()
+    {
+        return $this->belongsTo(SippolJenis::class, 'id_sippol_jenis');
+    }
 }

@@ -151,6 +151,10 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
 
         Route::resource('sippol-bp-dua-duas', SippolBpDuaDuaController::class);
         Route::post('/sippol-bp-dua-duas-bersih', [SippolBpDuaDuaController::class, 'bersih'])->name('sippol-bp-dua-duas.bersih');
+        Route::get('/sippol-bp-dua-duas-tanggal/{id}/{tanggal}', [SippolBpDuaDuaController::class, 'tanggal'])->name('sippol-bp-dua-duas.tanggal');
+        Route::get('/sippol-bp-dua-duas/list/{id}', [SippolBpDuaDuaController::class, 'show'])->name('sippol-bp-dua-duas.list');
+        Route::get('/sippol-bp-dua-duas/data/{id}', [SippolBpDuaDuaController::class, 'data'])->name('sippol-bp-dua-duas.data');
+
 
         Route::get('/sippol-jenis/data/{id}', [SippolJenisController::class, 'index'])->name('sippol-jenis.show');
         Route::get('/sippol-jenis/rekap/{id}', [SippolJenisController::class, 'rekap'])->name('sippol-jenis.rekap');

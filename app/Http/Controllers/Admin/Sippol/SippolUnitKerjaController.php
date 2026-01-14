@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Bast\BastUnitKerja;
 use App\Models\Sippol\SippolPeriode;
+use App\Models\Sippol\SippolBpDuaDua;
 
 class SippolUnitKerjaController extends Controller
 {
@@ -38,7 +39,8 @@ class SippolUnitKerjaController extends Controller
         $SippolPeriode = SippolPeriode::find($id);
         $BastUnitKerja = BastUnitKerja::orderBy('no_urut','ASC')->get();
         $SippolUnitKerja = SippolUnitKerja::with('bastUnitKerja')->where('id_periode', $id)->get();
-        return view('admin.sippol.unit-kerjas.index', compact('id', 'BastUnitKerja','SippolPeriode','SippolUnitKerja'));
+        $tanggal = SippolBpDuaDua::select('tanggal')->where('tanggal','!=', null)->where('id_periode', $id)->groupBy('tanggal')->get();
+        return view('admin.sippol.unit-kerjas.index', compact('id', 'BastUnitKerja','SippolPeriode','SippolUnitKerja','tanggal'));
     }
 
     public function store(Request $request)

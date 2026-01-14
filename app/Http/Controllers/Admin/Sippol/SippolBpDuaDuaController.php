@@ -9,13 +9,16 @@ use Yajra\DataTables\Facades\DataTables;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\SipdExport;
 use App\Models\Sippol\SippolJenis;
+use App\Models\Bast\BastUnitKerja;
+use App\Models\Sippol\SippolPeriode;
+use App\Models\Sippol\SippolUnitKerja;
 
 class SippolBpDuaDuaController extends Controller
 {
-    public function index(Request $request)
+    public function data(Request $request,$id)
     {
         if ($request->ajax()) {
-            $data = SippolBpDuaDua::latest()->get();
+            $data = SippolBpDuaDua::with('jenisbp22:id,nama_jenis')->where('id_periode', $id)->orderBy('id', 'ASC')->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){
@@ -27,6 +30,14 @@ class SippolBpDuaDuaController extends Controller
                 ->make(true);
         }
         return view('sippol-bp-dua-duas.index');
+    }
+    public function show($id)
+    {
+        $SippolPeriode = SippolPeriode::find($id);
+        $BastUnitKerja = BastUnitKerja::orderBy('no_urut','ASC')->get();
+        $SippolUnitKerja = SippolUnitKerja::with('bastUnitKerja')->where('id_periode', $id)->get();
+        $tanggal = SippolBpDuaDua::select('tanggal')->where('tanggal','!=', null)->where('id_periode', $id)->groupBy('tanggal')->get();
+        return view('admin.sippol.bp-dua-duas.index', compact('id', 'BastUnitKerja','SippolPeriode','SippolUnitKerja','tanggal'));
     }
 
     public function store(Request $request)
@@ -238,5 +249,11 @@ class SippolBpDuaDuaController extends Controller
         SippolBpDuaDua::where('id_periode', $request->id_periode)->delete();
         SippolJenis::where('id_periode', $request->id_periode)->delete();
         return response()->json(['success' => 'SippolBpDuaDua deleted successfully.']);
+    }
+    public function tanggal($id,$tanggal)
+    {
+        SippolBpDuaDua::where('id_periode', $id)->where('tanggal', $tanggal)->delete();
+        return response()->json(['success' => 'updated successfully.']);
+        
     }
 }

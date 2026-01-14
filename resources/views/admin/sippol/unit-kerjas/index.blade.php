@@ -12,6 +12,7 @@
         <div class="card-body">
             <a href="javascript:void(0)" class="btn btn-success" id="createNewSippolUnitKerja"> Create New SippolUnitKerja</a>
             <a href="javascript:void(0)" class="btn btn-primary" id="createbp22">import bp22</a>
+            <a href="{{ route('sippol-bp-dua-duas.list', $id) }}" class="btn btn-secondary">data masuk</a>
             <button class="btn btn-danger" id="bersih">Refresh</button>
             <a href="{{ route('sippol-jenis.show', $id) }}" class="btn btn-secondary">Rekap</a>
             <a href="{{ route('sippol-jenis.final', $id) }}" class="btn btn-primary">Final</a>
@@ -154,6 +155,9 @@
       <div class="modal-body">
         <form id="formBersih">
           <input type="hidden" id="id_periode" name="id_periode" value="{{ $id }}">
+          @foreach ($tanggal as $tgl )
+              <a href="javascript:void(0);" class="btn btn-success kategori-btn" data-route-url="{{ route('sippol-bp-dua-duas.tanggal',[$id,$tgl->tanggal]) }}">{{ $tgl->tanggal }}</a>
+          @endforeach
         </form>
       </div>
       <div class="modal-footer">
@@ -467,6 +471,32 @@
             }
         })
     });
+    $('.kategori-btn').on('click', function(e) {
+            e.preventDefault();
+            var routeUrl = $(this).data('route-url');
+
+            // Example: Show a loading state or disable the button
+            $(this).prop('disabled', true).text('Processing...');
+
+            $.ajax({
+                url: routeUrl,
+                type: 'get',
+                success: function(response) {
+                    // alert('Kategori updated successfully!');
+                    location.reload();
+                },
+                error: function(xhr) {
+                    alert('Error updating kategori: ' + xhr.responseText);
+                    console.error('Error:', xhr.responseText);
+                },
+                complete: function() {
+                    // Re-enable the button after the request is complete
+                    $('.kategori-btn').prop('disabled', false).text(function() {
+                        return $(this).data('kategori'); // Restore original text
+                    });
+                }
+            });
+        });
     
   });
 </script>
