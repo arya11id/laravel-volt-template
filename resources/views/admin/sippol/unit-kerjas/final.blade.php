@@ -38,7 +38,7 @@
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $jenis->kode }}</td>
-                                <td>{{ $jenis->nama_unit_kerja }}</td>
+                                <td><a href="{{ route('sippol-jenis.sekolah', ['id' => $SippolPeriode->id, 'sekolah' => $jenis->kode]) }}">{{ $jenis->nama_unit_kerja }}</a></td>
                                 <td>Rp {{ number_format($jenis->jml_gu, 0, ',', '.') }}</td>
                                 <td>Rp {{ number_format($jenis->jml_sts, 0, ',', '.') }}</td>
                                 <td>Rp {{ number_format($jenis->panjar, 0, ',', '.') }}

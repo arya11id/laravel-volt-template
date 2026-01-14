@@ -18,7 +18,7 @@ class SippolJenisController extends Controller
 {
     public function index($id)
     {
-        $cek = SippolJenis::whereIn('id_kategori', [1,2,3,4,5])->orderBy('urutan','ASC')->count();
+        $cek = SippolJenis::whereIn('id_kategori', [1,2,3,4,5])->where('id_periode', $id)->orderBy('urutan','ASC')->count();
         $SippolPeriode = SippolPeriode::find($id);
         $SippolUnitKerja = SippolUnitKerja::with('bastUnitKerja')->where('id_periode', $id)->get();
         $SippolJenis = SippolJenis::select(
@@ -62,6 +62,7 @@ class SippolJenisController extends Controller
     }
     public function hasil($id)
     {
+        $cari = SippolJenis::find($id);
         $subQueryXa = SippolBpDuaDua::select(
                 'sekolah',
                 DB::raw('SUM(pengeluaran) AS total_pengeluaran')
@@ -80,6 +81,7 @@ class SippolJenisController extends Controller
             'xa.sekolah',
             'xa.total_pengeluaran'
         )
+        ->where('bpopp.sippol_unit_kerja.id_periode', $cari->id_periode)
         ->orderBy('id_bast_unit_kerja')
         ->get();
 
@@ -147,6 +149,7 @@ class SippolJenisController extends Controller
                 'xe.total_pengeluaran as ppn_pengeluaran'
             )
             ->orderBy('bpopp.sippol_unit_kerja.id_bast_unit_kerja')
+            ->where('bpopp.sippol_unit_kerja.id_periode', $id)
             ->get();
         $SippolPeriode = SippolPeriode::find($id);
         $SippolUnitKerja = SippolUnitKerja::with('bastUnitKerja')->where('id_periode', $id)->get();
@@ -355,5 +358,57 @@ class SippolJenisController extends Controller
             'ppnminus',
             'ppnlebih','beluminput'
         ));
+    }
+    public function sekolah($id,$sekolah)
+    {
+        //
+        $data = SippolBpDuaDua::where('bpopp.sippol_bast_bpduadua.id_periode', $id)
+            ->leftJoin('bpopp.sippol_jenis', 'bpopp.sippol_bast_bpduadua.id_sippol_jenis', '=', 'bpopp.sippol_jenis.id')
+            ->select(
+            'bpopp.sippol_bast_bpduadua.id',
+            'bpopp.sippol_bast_bpduadua.tanggal',
+            'bpopp.sippol_bast_bpduadua.kode',
+            'bpopp.sippol_bast_bpduadua.uraian',
+            'bpopp.sippol_bast_bpduadua.penerimaan',
+            'bpopp.sippol_bast_bpduadua.pengeluaran',
+            'bpopp.sippol_jenis.id_kategori'
+            )
+            ->where('bpopp.sippol_bast_bpduadua.sekolah', $sekolah)
+            ->whereNotNull('bpopp.sippol_bast_bpduadua.tanggal')
+            ->whereIn('bpopp.sippol_jenis.id_kategori', [1, 2, 3, 4, 5])
+            ->orderBy('bpopp.sippol_bast_bpduadua.id', 'ASC')
+            ->get();
+
+        $result = $data->groupBy('id_kategori');
+        $SippolPeriode = SippolPeriode::find($id);
+        $SippolUnitKerja = SippolUnitKerja::with('bastUnitKerja')->where('id_periode', $id)->where('kode', $sekolah)->first();
+        // return response()->json($result[1]);
+        return view('admin.sippol.unit-kerjas.sekolah', compact('result', 'SippolPeriode', 'SippolUnitKerja'));
+    }
+    public function export($id,$sekolah)
+    {
+        //
+        $data = SippolBpDuaDua::where('bpopp.sippol_bast_bpduadua.id_periode', $id)
+            ->leftJoin('bpopp.sippol_jenis', 'bpopp.sippol_bast_bpduadua.id_sippol_jenis', '=', 'bpopp.sippol_jenis.id')
+            ->select(
+            'bpopp.sippol_bast_bpduadua.id',
+            'bpopp.sippol_bast_bpduadua.tanggal',
+            'bpopp.sippol_bast_bpduadua.kode',
+            'bpopp.sippol_bast_bpduadua.uraian',
+            'bpopp.sippol_bast_bpduadua.penerimaan',
+            'bpopp.sippol_bast_bpduadua.pengeluaran',
+            'bpopp.sippol_jenis.id_kategori'
+            )
+            ->where('bpopp.sippol_bast_bpduadua.sekolah', $sekolah)
+            ->whereNotNull('bpopp.sippol_bast_bpduadua.tanggal')
+            ->whereIn('bpopp.sippol_jenis.id_kategori', [1, 2, 3, 4, 5])
+            ->orderBy('bpopp.sippol_bast_bpduadua.id', 'ASC')
+            ->get();
+
+        $result = $data->groupBy('id_kategori');
+        $SippolUnitKerja = SippolUnitKerja::with('bastUnitKerja')->where('id_periode', $id)->where('kode', $sekolah)->first();
+        $fileName = 'Rekap SIPPOL ' . $SippolUnitKerja->bastUnitKerja->nama_unit_kerja . '.xlsx';
+
+        return Excel::download(new SipdExport($id), $fileName);
     }
 }

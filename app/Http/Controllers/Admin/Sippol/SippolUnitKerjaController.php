@@ -14,7 +14,7 @@ class SippolUnitKerjaController extends Controller
     public function data(Request $request,$id)
     {
         if ($request->ajax()) {
-            $data = SippolUnitKerja::with('bastUnitKerja')->get();
+            $data = SippolUnitKerja::with('bastUnitKerja')->where('id_periode', $id)->get();
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function($row){

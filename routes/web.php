@@ -157,6 +157,7 @@ Route::middleware(['auth', 'verified', 'role:admin'])->group(function () {
         Route::get('/sippol-jenis/hasil/{id}', [SippolJenisController::class, 'hasil'])->name('sippol-jenis.hasil');
         Route::get('/sippol-jenis/kategori/{id}/{kategori}', [SippolJenisController::class, 'kategori'])->name('sippol-jenis.kategori');
         Route::get('/sippol-jenis/final/{id}', [SippolJenisController::class, 'final'])->name('sippol-jenis.final');
+        Route::get('/sippol-jenis/sekolah/{id}/{sekolah}', [SippolJenisController::class, 'sekolah'])->name('sippol-jenis.sekolah');
 
 
     });
